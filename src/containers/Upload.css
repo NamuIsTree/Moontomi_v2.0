@@ -1,0 +1,17 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+.MuiTab-wrapper {
+    font-family: 'hanna', serif;
+    font-size: 1.2rem;
+    padding: 1rem;
+}
+
+.big-text {
+    font-family: 'hanna', serif;
+}
+
+.vertical-tabpanel-0,
+.vertical-tabpanel-1,
+.vertical-tabpanel-2 {
+    width: 100%;
+}

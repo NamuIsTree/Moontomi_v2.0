@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 400;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
+}
+  
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 700;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff');
+}
+  
+@font-face {
+    font-family: 'LotteMartDream';
+    font-style: normal;
+    font-weight: 300;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff');
+}
+
+.home-container {
+    background-color: rgb(247, 247, 247);
+}
+
+.loader-text {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.HOF-title{
+    padding: 2%;
+    vertical-align: middle;
+    font-size: 2rem;
+}
+
+.HOF-title img{
+    vertical-align: middle;
+    margin-right: 1.2rem;
+    width: 5rem;
+    margin-bottom: -2.75rem;
+}
+
+.HOF-title img:hover {
+    opacity: 0.8;
+    width: 5.2rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.HOF, .ROF {
+    font-family: 'LotteMartDream', sans-serif;
+    font-size: 1.1rem;
+}
+
+.HOF-album {
+    background-color: rgba(255,255,255,1.0);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: inline-block;
+    position: relative;
+
+    border-radius: 20px;
+    overflow: none;
+    padding: 12px;
+
+    width: 80%;
+    height: 24rem;
+    margin: 1rem;
+    
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.HOF-album
+.HOF-album-detail {
+    background-color: rgba(255,255,255,0.5);
+    border-radius: 20px;
+    margin-top: 25rem;
+    margin-bottom: 10%;
+    position: bottom;
+    z-index: 3;
+}
+
+.HOF-album-detail img {
+    width: 8rem;
+    vertical-align: middle;
+    margin-left: -10rem;
+    margin-bottom: 3rem;
+    z-index: 0;
+}
+
+.HOF-album-detail
+.HOF-album-name {
+    vertical-align: middle;
+    font-size: 1.3rem;
+    z-index: 1;
+    margin-top: -6.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.HOF-album-detail
+.HOF-album-artist {
+    vertical-align: middle;
+    font-size: 1.2rem;
+    margin-bottom: 5rem;
+    z-index: 2;
+}

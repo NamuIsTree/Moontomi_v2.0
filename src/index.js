@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import Home from './containers/Home';
+import RegularEval from './containers/RegularEval';
+import Upload from './containers/Upload';
+
+import './index.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Router history={browserHistory}>
+        <Route path="/" component={App}>
+            <IndexRoute component={Home}/>
+            <Route path="evaluate" component={RegularEval}/>
+            <Route path="upload" component={Upload}/>
+        </Route>
+    </Router>,
+    document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

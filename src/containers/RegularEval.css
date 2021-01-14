@@ -1,0 +1,142 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+.regular-evaluation {
+    display: block;
+    padding: 1.5rem;
+}
+
+.album-information {
+    width: 100%;
+    text-align: center;
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.album-information
+.regular-evaluation-image img {
+    display: block;
+    border-radius: 12px;
+    padding: 1rem;
+    width: 40%;
+    max-width: 350px;
+    position: relative;
+    left: -50%;
+    float:right;
+}
+
+.album-information
+.regular-evaluation-analysis {
+    padding: 1rem;
+    position: relative;
+    width: 40%;
+    max-width: 350px;
+    left: 50%;
+    float: left;
+}
+
+.album-information
+.regular-evaluation-rating {
+    font-family: 'hanna', serif;
+    margin-top: 15%;
+    font-size: 3rem;
+}
+
+.regular-evaluation-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-align: center;
+}
+
+.regular-evaluation-title
+.MuiInputBase-input {
+    width: 5rem;
+    font-size: 2.2rem;
+    text-align: center;
+    font-family: 'hanna', serif;
+    margin-top: -0.7rem;
+}
+
+.evaluation-album-title {
+    margin-top: 0.5rem;
+    font-size: 1.7rem;
+    text-align: center;
+}
+
+.evaluation-album-artist {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: gray;
+    text-align: center;
+}
+
+.album-comments-container {
+    width: 100%;
+    text-align: center;
+}
+
+.album-comment {
+    display: block;
+    padding: 1rem;
+    text-align: left;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.upload-button {
+    display: block;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+
+.opened-comment {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.MuiList-root {
+    display: inline-block;
+    font-family: inherit;
+}
+
+.best1 {
+    color: #ffb400;
+    font-weight: 600;
+}
+
+.best2 {
+    color: #4a4f5a;
+    font-weight: 600;
+}
+
+.best3 {
+    color: #6e3732;
+    font-weight: 600;
+}
+
+.album-comment-rating {
+    display: inline-block;
+}
+
+.album-comment-name {
+    font-size: 1.2rem;
+}
+
+.album-comment-name-additional {
+    font-size: 1rem;
+    color: #585858;
+}
+
+.one-line-comment-detail {
+    font-size: 1.1rem;
+    font-weight: 600;
+
+}

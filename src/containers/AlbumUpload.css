@@ -1,0 +1,15 @@
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+.album-upload-title {
+    font-family: 'hanna', serif;
+    font-size: 3rem;
+}
+
+.album-upload-detail {
+    font-family: 'hanna', serif;
+    font-size: 1rem;
+}
+
+.MuiInput-input {
+    font-family: 'hanna', serif;
+}
