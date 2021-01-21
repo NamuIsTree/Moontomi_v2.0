@@ -12,26 +12,32 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Home.css"
 
-function ShowAlbum ({index, id, name, artist}) {
-    const imgsrc = "url(http://moontomi.duckdns.org/images/" + id + ".jpg)";
+function ShowAlbum ({index, tot, id, name, artist}) {
+    const imgsrc = "url(http://3.35.178.151/images/covers/" + id + ".jpg)";
     var trophy;
     if (index === 1) {
-        trophy = "http://moontomi.duckdns.org/images/gold.png";
+        trophy = "http://3.35.178.151/images/trophies/gold.png";
     }
     else if (index === 2) {
-        trophy = "http://moontomi.duckdns.org/images/silver.png";
+        trophy = "http://3.35.178.151/images/trophies/silver.png";
     }
     else if (index === 3) {
-        trophy = "http://moontomi.duckdns.org/images/bronze.png";
+        trophy = "http://3.35.178.151/images/trophies/bronze.png";
     }
     else {
-        trophy = "http://moontomi.duckdns.org/images/unrank.png";
+        trophy = "http://3.35.178.151/images/trophies/unrank.png";
     }
     
+    var linknum = tot - id + 1;
+    const imglink = '/evaluate/' + linknum; 
+
     return (
         <div className="HOF-album"
              style = {{
                  backgroundImage: imgsrc
+             }}
+             onClick={() => {
+                 document.location.href = imglink
              }}
         >
             <div className="HOF-album-detail">
@@ -53,22 +59,26 @@ class Home extends React.Component {
         isHOF: true,
         ROFs : [],
         HOFs : [],
-        albums : []
+        albums : [],
+        len : 0,
     }
 
     getAlbums = async () => {
-        var url = "http://moontomi.duckdns.org:8081/api/albums";
-        var albums = await axios.get(url);
-        albums.data.sort(function(a, b) {
+        var url = "http://3.35.178.151:8080/api/get/albums/all";
+        var albums = await axios.post(url);
+        var album_len = albums.data.length;
+        albums = albums.data.filter(album => album.isOpen === 1);
+        albums.sort(function(a, b) {
             return b.rating - a.rating;
         });
 
-        const HOF = albums.data.slice(0, 10);
-        const ROF = albums.data.slice(-10).reverse();
+        const HOF = albums.slice(0, 10);
+        const ROF = albums.slice(-10).reverse();
 
         this.setState({albums: HOF,
                        ROFs: ROF,
                        HOFs: HOF,
+                       len: album_len,
                        isLoading: false});
     }
 
@@ -108,7 +118,7 @@ class Home extends React.Component {
                 <div className="page_title">
                     <center>
                     <div className="HOF-title">
-                        <img src="http://moontomi.duckdns.org/images/m_logo.png" alt="m_logo"/>
+                        <img src="http://3.35.178.151/images/logo/m_logo.png" alt="m_logo"/>
                         
                         <ButtonGroup 
                         orientation="vertical"
@@ -145,6 +155,7 @@ class Home extends React.Component {
                                 <ShowAlbum 
                                     key = {order}
                                     index = {order++}
+                                    tot = {this.state.len}
                                     id = {album.id}
                                     name = {album.name}
                                     artist = {album.artist}

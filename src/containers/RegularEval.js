@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Doughnut } from 'react-chartjs-2';
 import axios from 'axios';
 
@@ -14,6 +13,7 @@ import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
 import Filter3Icon from '@material-ui/icons/Filter3';
 import ListItemText from '@material-ui/core/ListItemText';
+import Chip from '@material-ui/core/Chip';
 
 import './RegularEval.css'
 
@@ -29,6 +29,7 @@ class RegularEval extends React.Component {
         album_nation: '',
         album_list: [],
         album_year: 0,
+        album_isOpen: false,
         album_comments: [],
         rating: 0.0
     }
@@ -43,7 +44,7 @@ class RegularEval extends React.Component {
         if (event.target.value > this.state.albums.length) event.target.value = this.state.albums.length;
         if (event.target.value < 1) event.target.value = 1;
 
-        var name, artist, genre, nation, year, list, isOpen, comments;
+        var name, artist, genre, nation, year, list, isOpen, comments, rating;
 
         comments = this.state.comments.filter(comment => comment.album_id === parseInt(event.target.value));
 
@@ -56,6 +57,7 @@ class RegularEval extends React.Component {
                     year = album.year;
                     list = album.list.split('\n');
                     isOpen = album.isOpen;
+                    rating = album.rating;
             }
         })
 
@@ -71,7 +73,8 @@ class RegularEval extends React.Component {
             album_nation: nation,
             album_year: year,
             album_list: list,
-            album_comments: comments
+            album_comments: comments,
+            rating: rating
         });
     }
 
@@ -82,7 +85,6 @@ class RegularEval extends React.Component {
             id: album_id,
             rating: rating
         };
-        console.log(obj);
         const response = await axios.post(url, obj);
         console.log(response);
     }
@@ -102,21 +104,39 @@ class RegularEval extends React.Component {
 
     getAlbums = async () => {
         const album = await axios.post('http://3.35.178.151:8080/api/get/albums/all');
+        var id;
+
+        console.log(typeof this.props.routeParams.id);
+
+        if (isNaN(this.props.routeParams.id) === false) {
+            id = Math.ceil(parseInt(this.props.routeParams.id));
+            if (id < 1) id = 1;
+            else if (id > album.data.length) id = album.data.length;
+        }
+        else id = 1;
+
+        console.log(id);
+
         this.setState({
-            album_id: album.data.length,
-            album_name: album.data[album.data.length - 1].name,
-            album_artist: album.data[album.data.length - 1].artist,
-            album_genre: album.data[album.data.length - 1].genre,
-            album_nation: album.data[album.data.length - 1].nation,
-            album_year: album.data[album.data.length - 1].year,
-            album_list: album.data[album.data.length - 1].list.split('\n'),
+            album_id: album.data.length + 1 - id,
+            album_name: album.data[album.data.length - id].name,
+            album_artist: album.data[album.data.length - id].artist,
+            album_genre: album.data[album.data.length - id].genre,
+            album_nation: album.data[album.data.length - id].nation,
+            album_year: album.data[album.data.length - id].year,
+            album_list: album.data[album.data.length - id].list.split('\n'),
+            album_isOpen: album.data[album.data.length - id].isOpen,
             albums: album.data
         })
     }
 
     getComments = async () => {
         const comment = await axios.post('http://3.35.178.151:8080/api/get/comments/all');
-        const album_comments = comment.data.filter(c => c.album_id === parseInt(this.state.album_id));
+        var album_comments = comment.data.filter(c => c.album_id === parseInt(this.state.album_id));
+
+        album_comments.forEach(comment => {
+            comment.isOpen = this.state.album_isOpen;
+        })
 
         this.setState({
             comments: comment.data,
@@ -131,11 +151,27 @@ class RegularEval extends React.Component {
     }
 
     render() {
-        const {isLoading, album_id, album_name, album_comments, album_list} = this.state;
+        const {isLoading, album_id, album_name, album_genre, album_comments, album_list} = this.state;
         const imgsrc = "http://3.35.178.151:3000/images/covers/" + album_id + ".jpg";
         
+        var i, genrelist = [], genre = String(album_genre);
+        for (i = 0; i < genre.length; i++) {
+            var gi = '';
+            switch (genre.charAt(i)) {
+                case '1' :  gi = 'POP'; break;
+                case '2' :  gi = 'R&B/Soul'; break;
+                case '3' :  gi = 'Rock'; break;
+                case '4' :  gi = 'J-POP'; break;
+                case '5' :  gi = 'Jazz'; break;
+                case '6' :  gi = 'HipHop'; break;
+                case '7' :  gi = 'Electronic'; break;
+                default  :  gi = 'Others'; break;
+            }
+            genrelist.push(gi);
+        }
+
         var InstantData = [], total_preference = 0.0, total_rating = 0.0, cnt = 0;
-        for (var i = 0; i < album_list.length; i++)
+        for (i = 0; i < album_list.length; i++)
             InstantData.push({ name: album_list[i], preference: 0.0 });
         
         album_comments.forEach(comment => {
@@ -163,15 +199,14 @@ class RegularEval extends React.Component {
         InstantData.forEach(instant => {
             if (labels.length < 3) {
                 labels.push(instant.name);
-                data.push(instant.preference);
+                data.push(instant.preference.toFixed(2));
                 top_preference += instant.preference;
             }
         })
-        labels.push("Others");
-        data.push(total_preference - top_preference);
 
-        console.log(labels);
-        console.log(data);
+        var res = total_preference - top_preference;
+        labels.push("Others");
+        data.push(res.toFixed(2));
 
         return (
             <div className="regular-evaluation">
@@ -199,6 +234,11 @@ class RegularEval extends React.Component {
                         </div>
                         <div className="evaluation-album-artist">
                             [{this.state.album_artist}]의 {this.state.album_year}년도 앨범
+                        </div>
+                        <div className="genre-chips">
+                        { genrelist.map((g, index) => {
+                            return (<Chip key={index} size="small" label={g} variant="outlined" style={{ marginRight: "0.5rem" }}/>);
+                        })}
                         </div>
                         <div className="album-information">
                             <div className="regular-evaluation-image">
@@ -264,7 +304,9 @@ class RegularEval extends React.Component {
                                                 <div className="best-3">
                                                     <List>
                                                         Top 3
-                                                        <ListItem>
+                                                        <ListItem
+                                                            dense={true}
+                                                        >
                                                             <ListItemIcon>
                                                                 <Filter1Icon style={{ color: '#ffb400' }} />
                                                             </ListItemIcon>
@@ -274,7 +316,9 @@ class RegularEval extends React.Component {
                                                                 </span>
                                                             </ListItemText>
                                                         </ListItem>
-                                                        <ListItem>
+                                                        <ListItem
+                                                            dense={true}
+                                                        >
                                                             <ListItemIcon>
                                                                 <Filter2Icon style={{ color: '4a4f5a' }} />
                                                             </ListItemIcon>
@@ -284,7 +328,9 @@ class RegularEval extends React.Component {
                                                                 </span>
                                                             </ListItemText>
                                                         </ListItem>
-                                                        <ListItem>
+                                                        <ListItem
+                                                            dense={true}
+                                                        >
                                                             <ListItemIcon>
                                                                 <Filter3Icon style={{ color: '6e3732' }} />
                                                             </ListItemIcon>

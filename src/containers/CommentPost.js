@@ -53,7 +53,6 @@ class CommentPost extends React.Component {
     getAlbums = async () => {
         var url = "http://3.35.178.151:8080/api/get/albums/all";
         var album = await axios.post(url);
-        console.log(album.data.reverse()[0].list);
         this.setState({
             albums: album.data.reverse(),
             album_id: album.data.length,
@@ -76,7 +75,6 @@ class CommentPost extends React.Component {
             comment: comment,
             isOpen: 0
         };
-        console.log(obj);
         const response = await axios.post(url, obj);
         console.log(response);
     }
@@ -153,7 +151,7 @@ class CommentPost extends React.Component {
                                 getOptionLabel={(option) => option.name}
                                 defaultValue={this.state.albums[this.state.albums.length - this.state.album_id]}
                                 onChange={(event, newValue) => {
-                                    if (newValue.id !== null) {
+                                    if (typeof(newValue) !== "undefined") {
                                         this.setState({album_id: newValue.id, tracks: newValue.list});
                                     }
                                 }}
@@ -205,7 +203,7 @@ class CommentPost extends React.Component {
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="BEST 3" variant="outlined" />}
                             /> <br/> <br/>
 
-                            4. 앨범 한줄평을 적어주세요. <br/><br/>
+                            4. 앨범 한줄평을 적어주세요. ("" 대신 「 」를 사용해 주세요.) <br/><br/>
                             <TextField
                                 type="text"
                                 id="standard-multiline-static"

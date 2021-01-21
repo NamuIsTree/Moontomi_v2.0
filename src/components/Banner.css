@@ -19,50 +19,17 @@
     src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff');
 }
 
-body * {
-    font-family: 'LotteMartDream', serif;
-}
 
-.logo {
+.Banner {
+    display: block;
+    margin-top: 9%;
     width: 100%;
-    height: 7.8rem;
-    text-align: center;
-    background-color: inherit;
-    line-height: 10rem;
-    color: white;
-    font-size: 5.0rem;
-    font-weight: bold;
-}
-
-.logo img {
-    width: 100%;
-    max-width: 34rem;
-}
-
-.menu {
-    background-color: inherit;
-    border-color: #242d3c;
-    height: 4.0rem;
-}
-
-.menu-item {
-    display: inline-block;
-    color: #242d3c;
-    font-size: 1.2rem;
-    line-height: 4.0rem;
-    width: 25%;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    text-decoration: none;
-    border-color: black;
-}
-
-.menu-item:hover {
-    color: #ff8080;
-}
-
-.menu-item:active, .menu-item.active {
+    height: 145px;
     color: white;
     background-color: #242d3c;
+}
+
+.Detail-Kim, .Detail-Moon {
+    padding: 1rem;
+    font-size: 0.8rem;
 }

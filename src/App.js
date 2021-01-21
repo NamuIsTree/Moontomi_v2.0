@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Header from './components/Header';
+import Banner from './components/Banner';
 
 class App extends Component {
 
@@ -17,6 +18,7 @@ class App extends Component {
             <div>
                 <Header/>
                 {this.props.children}
+                <Banner/>
             </div>
         );
     }
