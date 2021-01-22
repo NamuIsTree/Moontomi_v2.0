@@ -53,10 +53,11 @@ class CommentPost extends React.Component {
     getAlbums = async () => {
         var url = "http://3.35.178.151:8080/api/get/albums/all";
         var album = await axios.post(url);
+        album = album.data.reverse();
         this.setState({
-            albums: album.data.reverse(),
-            album_id: album.data.length,
-            tracks: album.data.reverse()[0].list,
+            albums: album,
+            album_id: album.length,
+            tracks: album[0].list,
             isLoading: false
         });
     }
@@ -146,8 +147,14 @@ class CommentPost extends React.Component {
                             1. 평가하고자 하는 앨범을 선택해 주세요. <br/><br/>
                             <Autocomplete
                                 id="combo-box-albums"
+                                className="combo-box-albums"
                                 fullWidth={true}
                                 options={this.state.albums}
+                                style ={{
+                                    width: '60%',
+                                    marginLeft: '20%',
+                                    marginRight: '20%'
+                                }}
                                 getOptionLabel={(option) => option.name}
                                 defaultValue={this.state.albums[this.state.albums.length - this.state.album_id]}
                                 onChange={(event, newValue) => {
@@ -172,6 +179,11 @@ class CommentPost extends React.Component {
                             3. BEST 3를 골라 주세요. <br/><br/>
                             <Autocomplete  
                                 id="combo-box-best1"
+                                style ={{
+                                    width: '60%',
+                                    marginLeft: '20%',
+                                    marginRight: '20%'
+                                }}
                                 fullWidth={true}
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
@@ -183,6 +195,11 @@ class CommentPost extends React.Component {
 
                             <Autocomplete  
                                 id="combo-box-best2"
+                                style ={{
+                                    width: '60%',
+                                    marginLeft: '20%',
+                                    marginRight: '20%'
+                                }}
                                 fullWidth={true}
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
@@ -194,6 +211,11 @@ class CommentPost extends React.Component {
 
                             <Autocomplete  
                                 id="combo-box-best3"
+                                style ={{
+                                    width: '60%',
+                                    marginLeft: '20%',
+                                    marginRight: '20%'
+                                }}
                                 fullWidth={true}
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
@@ -208,6 +230,11 @@ class CommentPost extends React.Component {
                                 type="text"
                                 id="standard-multiline-static"
                                 label="앨범 한줄평"
+                                style ={{
+                                    width: '60%',
+                                    marginLeft: '20%',
+                                    marginRight: '20%'
+                                }}
                                 value={this.state.comment}
                                 name="comment"
                                 multiline

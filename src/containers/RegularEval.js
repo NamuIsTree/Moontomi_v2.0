@@ -97,8 +97,10 @@ class RegularEval extends React.Component {
             .then((response) => {
                 console.log(response);
             })
-            alert("업데이트가 완료되었습니다.\n 앨범 정보가 OPEN 상태로 변경됩니다.")
-            document.location.href = '/evaluate';
+            alert("업데이트가 완료되었습니다.\n앨범 정보가 OPEN 상태로 변경됩니다.")
+
+            var target_id = this.state.albums.length + 1 - this.state.album_id;
+            document.location.href = '/evaluate/' + target_id;
         }
     }
 
@@ -106,16 +108,12 @@ class RegularEval extends React.Component {
         const album = await axios.post('http://3.35.178.151:8080/api/get/albums/all');
         var id;
 
-        console.log(typeof this.props.routeParams.id);
-
         if (isNaN(this.props.routeParams.id) === false) {
             id = Math.ceil(parseInt(this.props.routeParams.id));
             if (id < 1) id = 1;
             else if (id > album.data.length) id = album.data.length;
         }
         else id = 1;
-
-        console.log(id);
 
         this.setState({
             album_id: album.data.length + 1 - id,

@@ -106,3 +106,8 @@
     margin-bottom: 5rem;
     z-index: 2;
 }
+
+.home-comment {
+    text-align: center;
+    margin-top: 5%;
+}

@@ -55,7 +55,8 @@ body * {
     cursor: pointer;
     transition: background-color 0.3s;
     text-decoration: none;
-    border-color: black;
+    border-bottom: 2px solid;
+    border-color: #242d3c;
 }
 
 .menu-item:hover {

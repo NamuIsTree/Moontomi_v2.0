@@ -23,7 +23,7 @@ const Header = (props, context) => {
             <div className="menu">
                 <MenuItem to={'/'} active={router.isActive('/', true)}>MoonTomi</MenuItem>
                 <MenuItem to={'/evaluate/1'} active={router.location.pathname.includes('/evaluate')}>음평회</MenuItem>
-                <MenuItem to={'/lookup'} active={router.isActive('/lookup', true)}>톺아보기</MenuItem>
+                <MenuItem to={'/lookup'} active={router.isActive('/lookup', true)}>둘러보기</MenuItem>
                 <MenuItem to={'/upload'} active={router.isActive('/upload', true)}>업로드</MenuItem>
             </div>
         </div>

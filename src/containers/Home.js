@@ -117,11 +117,9 @@ class Home extends React.Component {
                 ) : (
                 <div className="page_title">
                     <center>
+                    <br/>
                     <div className="HOF-title">
-                        <img src="http://3.35.178.151/images/logo/m_logo.png" alt="m_logo"/>
-                        
                         <ButtonGroup 
-                        orientation="vertical"
                         aria-label="outlined primary button group">
                             <Button 
                             color={isHOF ? "secondary" : "primary"}
@@ -164,6 +162,9 @@ class Home extends React.Component {
                         </Slider>
                     </div>
                     </center>
+                    <div className="home-comment">
+                        앨범 커버를 클릭하면, 해당 평가 페이지로 이동합니다.
+                    </div>
                 </div>
                 )}
             </section>
