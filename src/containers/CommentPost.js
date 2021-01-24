@@ -158,9 +158,9 @@ class CommentPost extends React.Component {
                                 getOptionLabel={(option) => option.name}
                                 defaultValue={this.state.albums[this.state.albums.length - this.state.album_id]}
                                 onChange={(event, newValue) => {
-                                    if (typeof(newValue) !== "undefined") {
+                                    try {
                                         this.setState({album_id: newValue.id, tracks: newValue.list});
-                                    }
+                                    } catch(e) {}
                                 }}
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="앨범 선택" variant="outlined" />}
                             /> <br/> <br/>
@@ -188,7 +188,9 @@ class CommentPost extends React.Component {
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
                                 onChange={(event, newValue) => {
-                                    this.setState({best1: newValue.id});
+                                    try {
+                                        this.setState({best1: newValue.id});
+                                    } catch(e) {}
                                 }}
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="BEST 1" variant="outlined" />}
                             /> <br/> <br/>
@@ -204,7 +206,9 @@ class CommentPost extends React.Component {
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
                                 onChange={(event, newValue) => {
-                                    this.setState({best2: newValue.id});
+                                    try {
+                                        this.setState({best2: newValue.id});
+                                    } catch(e) {}
                                 }}
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="BEST 2" variant="outlined" />}
                             /> <br/> <br/>
@@ -220,7 +224,9 @@ class CommentPost extends React.Component {
                                 options={tracklist}
                                 getOptionLabel={(option) => option.track}
                                 onChange={(event, newValue) => {
-                                    this.setState({best3: newValue.id});
+                                    try {
+                                        this.setState({best3: newValue.id});
+                                    } catch(e) {}
                                 }}
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="BEST 3" variant="outlined" />}
                             /> <br/> <br/>

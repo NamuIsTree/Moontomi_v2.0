@@ -12,7 +12,8 @@ const Banner = () => {
             </div>
             <div className="Detail-Moon">
                 운영자 : 문형규 <br />
-                한남대학교 미술교육과
+                한남대학교 미술교육과 <br />
+                Blog : https://blog.naver.com/hk12062006
             </div>
         </div>
     )

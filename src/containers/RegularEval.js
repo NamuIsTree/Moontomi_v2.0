@@ -38,6 +38,15 @@ class RegularEval extends React.Component {
         super(props);
         this.handleValueChange = this.handleValueChange.bind(this);
         this.handleUpdateAlbum = this.handleUpdateAlbum.bind(this);
+        this.handleOpenComment = this.handleOpenComment.bind(this);
+    }
+
+    handleOpenComment(event, index) {
+        try {
+            let InstantComment = this.state.album_comments;
+            InstantComment[index].isOpen = 1;
+            this.setState({album_comments: InstantComment});
+        } catch(e) {}
     }
 
     handleValueChange(event) {
@@ -358,9 +367,8 @@ class RegularEval extends React.Component {
                                                             className="open-button"
                                                             startIcon={<LockOpenIcon />}
                                                             onClick={(event) => {
-                                                                var comments = album_comments;
-                                                                comments[index].isOpen = 1;
-                                                                this.setState({album_comments: comments});
+                                                                console.log(index);
+                                                                this.handleOpenComment(event, index);
                                                             }}
                                                         >
                                                             OPEN
