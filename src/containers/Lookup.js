@@ -45,7 +45,7 @@ const PrettoSlider = withStyles({
   },
 })(Slider);
 
-function LookupAlbum ({id, tot, name, artist, nation, rating}) {
+function LookupAlbum ({index, id, tot, name, artist, nation, rating}) {
     const imgsrc = "http://3.35.178.151/images/covers/" + id + ".jpg";
 
     return (
@@ -59,26 +59,41 @@ function LookupAlbum ({id, tot, name, artist, nation, rating}) {
                 document.location.href = linkto;
             }}
         >
-            <TableCell style={{ width:'20%' }} align="center">
+            <TableCell style={{fontSize: '1.05rem', fontFamily:'inherit', width:'16.66666%' }} align="center">
+                {index+1}
+            </TableCell>
+            <TableCell style={{ width:'16.66666%' }} align="center">
                 <img src={imgsrc} alt="album-cover" style={{width:'50%', minWidth:'100px'}}/>
             </TableCell>
-            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'20%' }} align="center">
+            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'16.66666%' }} align="center">
                 {name}
             </TableCell>
-            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'20%' }} align="center">
+            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'16.66666%'}} align="center">
                 {artist}
             </TableCell>
-            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'20%' }} align="center">
+            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'16.66666%' }} align="center">
                 {nation}
             </TableCell>
-            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'20%' }} align="center">
+            <TableCell style={{ fontSize: '1.05rem', fontFamily:'inherit', width:'16.66666%' }} align="center">
                 {rating}
             </TableCell>
         </TableRow>
     )
 }
 
+const genrelist = [
+    {id: 0, genre: 'ALL'},
+    {id: 1, genre: 'POP'},
+    {id: 2, genre: 'R&B/Soul'},
+    {id: 3, genre: 'Rock'},
+    {id: 4, genre: 'J-POP'},
+    {id: 5, genre: 'Jazz'},
+    {id: 6, genre: 'HipHop'},
+    {id: 7, genre: 'Electronic'},
+]
+
 const columns = [
+    {id: ''},
     {id: '앨범커버'},
     {id: '앨범명'},
     {id: '아티스트'},
@@ -89,6 +104,7 @@ const columns = [
 class Lookup extends React.Component {
     state = {
         isLoading: true,
+        selectedGenre: 0,
         searchtext: '',
         sort_method: 0,
         value: [0, 100],
@@ -118,7 +134,7 @@ class Lookup extends React.Component {
     }
 
     render() {
-        const {isLoading, value, len, searchtext, sort_method, albums} = this.state;
+        const {isLoading, value, len, searchtext, selectedGenre, sort_method, albums} = this.state;
         const range_min = value[0] / 10, range_max = value[1] / 10;
         var lookup_albums = albums.filter(album => (album.rating >= range_min && album.rating <= range_max));
         
@@ -143,6 +159,10 @@ class Lookup extends React.Component {
                     return a.rating - b.rating;
                 });
                 break;
+        }
+
+        if (selectedGenre !== 0) {
+            lookup_albums = lookup_albums.filter(album => album.genre.toString().includes(selectedGenre.toString()));
         }
 
         lookup_albums = lookup_albums.filter(album => {
@@ -244,6 +264,25 @@ class Lookup extends React.Component {
                             ),
                         }}
                     />
+                    <Button
+                        style={{
+                            marginLeft: '2%',
+                            marginTop: '0.5%',
+                            borderColor: '242d3c',
+                            border: '2px solid',
+                            borderRadius: '12px',
+                            color: '#242d3c'
+                        }}
+                        onClick={() => {
+                            this.setState({
+                                selectedGenre: (selectedGenre + 1) % 8
+                            })
+                        }}
+                    >
+                        <span className="genre-label">
+                            {genrelist[selectedGenre].genre}
+                        </span>
+                    </Button>
                     <br />
                     <br />
                     <div className="lookup-albums">
@@ -256,7 +295,7 @@ class Lookup extends React.Component {
                                                 key={column.id}
                                                 style={{ 
                                                     fontFamily:'inherit', 
-                                                    width:'20%',
+                                                    width:'16.66666%',
                                                     fontSize:'1.1rem',
                                                     fontWeight:'400'
                                                 }}
@@ -268,9 +307,10 @@ class Lookup extends React.Component {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {lookup_albums.map(album=> {
+                                    {lookup_albums.map((album, index) => {
                                         return (
                                             <LookupAlbum
+                                                index={index}
                                                 key={album.id}
                                                 id={album.id}
                                                 tot={len}

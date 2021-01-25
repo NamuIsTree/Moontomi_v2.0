@@ -11,8 +11,6 @@ const MenuItem = ({active, children, to}) => (
 
 const Header = (props, context) => {
     const { router } = context;
-    console.log('props::');
-    console.log(context);
     return (
         <div>
             <div className="logo">
