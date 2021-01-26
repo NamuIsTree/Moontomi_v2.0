@@ -104,7 +104,7 @@ const columns = [
 class Lookup extends React.Component {
     state = {
         isLoading: true,
-        selectedGenre: 0,
+        selectedGenre: -1,
         searchtext: '',
         sort_method: 0,
         value: [0, 100],
@@ -161,7 +161,7 @@ class Lookup extends React.Component {
                 break;
         }
 
-        if (selectedGenre !== 0) {
+        if (selectedGenre > 0) {
             lookup_albums = lookup_albums.filter(album => album.genre.toString().includes(selectedGenre.toString()));
         }
 
@@ -280,7 +280,7 @@ class Lookup extends React.Component {
                         }}
                     >
                         <span className="genre-label">
-                            {genrelist[selectedGenre].genre}
+                            {selectedGenre === -1 ? '장르 선택' : genrelist[selectedGenre].genre}
                         </span>
                     </Button>
                     <br />

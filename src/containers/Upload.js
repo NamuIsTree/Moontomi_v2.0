@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import BigText from '../components/BigText';
 import AlbumUpload from './AlbumUpload';
 import CommentPost from './CommentPost';
+import CommentEdit from './CommentEdit';
 import "./Upload.css";
 
 function TabPanel(props) {
@@ -76,16 +77,12 @@ export default function Upload() {
                     className={classes.tabs}
                 >
                     <Tab label="Post" {...a11yProps(0)} />
-                    <Tab label="Edit" {...a11yProps(1)} />
-                    <Tab label="Upload" {...a11yProps(2)} />
+                    <Tab label="Upload" {...a11yProps(1)} />
                 </Tabs>
                 <TabPanel value={value} index={0}>
                     <CommentPost />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <BigText>개발중...</BigText>
-                </TabPanel>
-                <TabPanel value={value} index={2}>
                     <AlbumUpload />
                 </TabPanel>
             </div>

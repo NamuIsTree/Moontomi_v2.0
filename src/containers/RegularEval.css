@@ -111,6 +111,10 @@
     font-family: inherit;
 }
 
+.MuiSvgIcon-root:hover {
+    color: #242d3c;
+}
+
 .best1 {
     color: #ffb400;
     font-weight: 600;

@@ -5,6 +5,11 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
+import Fade from '@material-ui/core/Fade';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import IconButton from '@material-ui/core/IconButton';
+import EditRoundedIcon from '@material-ui/icons/EditRounded';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
 import Filter3Icon from '@material-ui/icons/Filter3';
+import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 
@@ -22,6 +28,15 @@ class RegularEval extends React.Component {
         isLoading: true,
         albums: [],
         comments: [],
+        isModalOpen: false,
+        ModalIndex: 0,
+        ModalStar: 0,
+        ModalBest1: 0,
+        ModalBest2: 0,
+        ModalBest3: 0,
+        ModalHashedPassword: '',
+        ModalPassword: '',
+        ModalComment: '',
         album_id: 0,
         album_artist: '',
         album_genre: '',
@@ -39,6 +54,7 @@ class RegularEval extends React.Component {
         this.handleValueChange = this.handleValueChange.bind(this);
         this.handleUpdateAlbum = this.handleUpdateAlbum.bind(this);
         this.handleOpenComment = this.handleOpenComment.bind(this);
+        this.handleCheckPassword = this.handleCheckPassword.bind(this);
     }
 
     handleOpenComment(event, index) {
@@ -47,6 +63,64 @@ class RegularEval extends React.Component {
             InstantComment[index].isOpen = 1;
             this.setState({album_comments: InstantComment});
         } catch(e) {}
+    }
+
+    handleEditComment = async () => {
+        const { album_comments, ModalIndex, ModalStar, ModalBest1, ModalBest2, ModalBest3, ModalComment} = this.state;
+        const obj = {
+            id : album_comments[ModalIndex].id,
+            star: ModalStar,
+            best1: ModalBest1,
+            best2: ModalBest2,
+            best3: ModalBest3,
+            comment: ModalComment
+        };
+
+        const response = await axios.post('http://3.35.178.151:8080/api/change/comment', obj);
+        console.log(response);
+    }
+
+    handleCheckPassword = async (event) => {
+        const obj = {
+            password: this.state.ModalPassword
+        }
+        const response = await axios.post('http://3.35.178.151:8080/api/check/password', obj);
+
+        const targetHashedPassword = this.state.album_comments[this.state.ModalIndex].password;
+        if (targetHashedPassword !== response.data) {
+            alert('비밀번호가 틀렸습니다.');
+        }
+        else alert('비밀번호가 확인되었습니다.\n수정 완료 버튼을 눌러 평가 수정을 진행해주세요.\n평가 수정 버튼을 누른 후, 새로 고침 한 번 부탁드립니다.')
+
+        this.setState({ModalHashedPassword: response.data});
+    }
+
+    openModal = (index) => {
+        const {album_comments} = this.state;
+        console.log(index);
+        const star = album_comments[index].star;
+        const best1 = album_comments[index].best1;
+        const best2 = album_comments[index].best2;
+        const best3 = album_comments[index].best3;
+        const comment = album_comments[index].comment;
+
+        this.setState({
+            isModalOpen: true,
+            ModalIndex: index,
+            ModalStar: star,
+            ModalBest1: best1,
+            ModalBest2: best2,
+            ModalBest3: best3,
+            ModalPassword: '',
+            ModalHashedPassword: '',
+            ModalComment: comment
+        });
+    }
+
+    closeModal = () => {
+        this.setState({
+            isModalOpen: false
+        });
     }
 
     handleValueChange(event) {
@@ -158,7 +232,9 @@ class RegularEval extends React.Component {
     }
 
     render() {
-        const {isLoading, album_id, album_name, album_genre, album_comments, album_list} = this.state;
+        const {isLoading, isModalOpen, ModalIndex, album_id, album_name,
+            ModalStar, ModalBest1, ModalBest2, ModalBest3, ModalComment, ModalPassword, ModalHashedPassword, 
+            album_genre, album_comments, album_list} = this.state;
         const imgsrc = "http://3.35.178.151:3000/images/covers/" + album_id + ".jpg";
         
         var i, genrelist = [], genre = String(album_genre);
@@ -301,6 +377,144 @@ class RegularEval extends React.Component {
                                         </span>
                                         <span className="album-comment-name-additional">
                                             님의 평가입니다. (#{comment.id})
+                                            <IconButton
+                                                aria-label="edit comment"
+                                                className="edit-button"
+                                                onClick={(event) => {
+                                                    this.openModal(index);
+                                                }}
+                                                style={{
+                                                    marginBottom: '0.1rem'
+                                                }}
+                                            >
+                                                <EditRoundedIcon />
+                                            </IconButton>
+                                            <Modal
+                                                open={isModalOpen}
+                                                onClose={this.closeModal}
+                                                style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Fade 
+                                                    in={isModalOpen}
+                                                    style={{
+                                                        backgroundColor: 'white',
+                                                        border: '2px solid #000',
+                                                        width: '30%',
+                                                        padding: '3rem',
+                                                        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+                                                    }}
+                                                >
+                                                    <div className="modal-edit-comment">
+                                                        <center>
+                                                            평가 수정(#{album_comments[ModalIndex].id}) <br/> <br/>
+                                                            [{album_comments[ModalIndex].nickname}]님의 평가를 수정합니다. <br/> <br/>
+                                                            1. 평점 <br/> <br/>
+                                                            <Rating
+                                                                name="star-rating"
+                                                                size="large"
+                                                                value={ModalStar / 2}
+                                                                precision={0.5}
+                                                                onChange={(event, newValue) => {
+                                                                    this.setState({ModalStar: newValue * 2})
+                                                                }}
+                                                            /> <br/> <br/>
+
+                                                            2. BEST 3 <br/> <br/>
+                                                            <Autocomplete
+                                                                id="combo-box-best1"
+                                                                className="combo-box-best1"
+                                                                fullWidth={true}
+                                                                options={album_list}
+                                                                getOptionLabel={(option) => option}
+                                                                value={album_list[ModalBest1]}
+                                                                renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="Best1" variant="outlined" />}
+                                                                onChange={(event, newValue)=> {
+                                                                    try {
+                                                                        const idx = album_list.indexOf(newValue);
+                                                                        this.setState({ModalBest1: idx});
+                                                                    } catch(e) {}
+                                                                }}
+                                                            /> <br/>
+                                                            <Autocomplete
+                                                                id="combo-box-best2"
+                                                                className="combo-box-best2"
+                                                                fullWidth={true}
+                                                                options={album_list}
+                                                                getOptionLabel={(option) => option}
+                                                                value={album_list[ModalBest2]}
+                                                                renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="Best1" variant="outlined" />}
+                                                                onChange={(event, newValue)=> {
+                                                                    try {
+                                                                        const idx = album_list.indexOf(newValue);
+                                                                        this.setState({ModalBest2: idx});
+                                                                    } catch(e) {}
+                                                                }}
+                                                            /> <br/>
+                                                            <Autocomplete
+                                                                id="combo-box-best3"
+                                                                className="combo-box-best3"
+                                                                fullWidth={true}
+                                                                options={album_list}
+                                                                getOptionLabel={(option) => option}
+                                                                value={album_list[ModalBest3]}
+                                                                renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="Best1" variant="outlined" />}
+                                                                onChange={(event, newValue)=> {
+                                                                    try {
+                                                                        const idx = album_list.indexOf(newValue);
+                                                                        this.setState({ModalBest3: idx});
+                                                                    } catch(e) {}
+                                                                }}
+                                                            /> <br/>
+                                                            3. 한줄평 <br/> <br/>
+                                                            <TextField
+                                                                fullWidth={true}
+                                                                multiline
+                                                                variant="outlined"
+                                                                rows={4}
+                                                                value={ModalComment}
+                                                                onChange={(event)=> {
+                                                                    try {
+                                                                        this.setState({ModalComment: event.target.value});
+                                                                    } catch(e) {}
+                                                                }}
+                                                            /> <br/> <br/>
+                                                            4. 비밀번호 <br/> <br/>
+                                                            <TextField
+                                                                label="비밀번호"
+                                                                required
+                                                                variant="outlined"
+                                                                value={ModalPassword}
+                                                                onChange={(event) => {
+                                                                    try {
+                                                                        this.setState({ModalPassword: event.target.value});
+                                                                    } catch(e) {}
+                                                                }}
+                                                            /> 
+                                                            <br/> <br/>
+                                                            <Button
+                                                                color="primary"
+                                                                variant="contained"
+                                                                onClick={this.handleCheckPassword}
+                                                            >
+                                                                비밀번호 확인
+                                                            </Button>
+                                                            <Button
+                                                                color="secondary"
+                                                                variant="contained"
+                                                                disabled={(ModalHashedPassword === album_comments[ModalIndex].password) ? false : true}
+                                                                style={{ marginLeft:'0.5rem' }}
+                                                                onClick={this.handleEditComment}
+                                                            >
+                                                                수정 완료
+                                                            </Button>
+                                                        </center>
+                                                    </div>
+                                                </Fade>
+                                            </Modal>
                                         </span>
                                         <div className="comment-detail">
                                         { comment.isOpen === 1 ? (
