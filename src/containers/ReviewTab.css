@@ -40,6 +40,11 @@
     transition-timing-function: ease;
 }
 
+.pre-review-section {
+    margin-left: 2rem;
+    margin-top: 2rem;
+}
+
 .pre-review-content {
     position: absolute;
     padding: 1rem;
@@ -116,4 +121,13 @@
 .album-date {
     margin-top: 0.2rem;
     color:rgb(131,131,131);
+}
+
+.review-text {
+    display: inline-block;
+    text-align: left;
+    padding-bottom: 1rem;
+    width: 50%;
+    min-width: 400px;
+    line-height: 1.5em;
 }

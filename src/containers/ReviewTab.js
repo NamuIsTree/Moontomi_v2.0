@@ -17,9 +17,14 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import AlbumIcon from '@material-ui/icons/Album';
 import ViewListIcon from '@material-ui/icons/ViewList';
 import Divider from '@material-ui/core/Divider';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
 
 import ReactPlayer from 'react-player';
 import './ReviewTab.css';
+
+const admin_key = process.env.REACT_APP_ADMIN_PASSWORD;
 
 class ReviewTab extends React.Component {
     state = {
@@ -27,6 +32,7 @@ class ReviewTab extends React.Component {
         reviews: [],
         isModalOpen: false,
         isReviewOpen: false,
+        isTrackOpened: false,
         reviewIndex: 0,
         text: '',
         tracklist: '',
@@ -46,34 +52,39 @@ class ReviewTab extends React.Component {
     }
 
     handlePostReview = async () => {
-        const { text, tracklist, title, rating, album_year, album_month,
-                album_day, artist, best1, best2, best3, album_genre, 
-                comment, youtube } = this.state;
+        if (this.state.password === admin_key) {
+            const { text, tracklist, title, rating, album_year, album_month,
+                    album_day, artist, best1, best2, best3, album_genre, 
+                    comment, youtube } = this.state;
 
-        var nowDate = new Date();
-        const date = nowDate.getFullYear() + '/' + (nowDate.getMonth() + 1) + '/' + nowDate.getDate();
+            var nowDate = new Date();
+            const date = nowDate.getFullYear() + '/' + (nowDate.getMonth() + 1) + '/' + nowDate.getDate();
 
-        const obj = {
-            text: text,
-            tracklist: tracklist,
-            title: title,
-            rating: rating,
-            album_year: album_year,
-            album_month: album_month,
-            album_day: album_day,
-            artist: artist,
-            date: date,
-            best1: best1,
-            best2: best2,
-            best3: best3,
-            genre: album_genre,
-            comment: comment,
-            youtube: youtube
+            const obj = {
+                text: text,
+                tracklist: tracklist,
+                title: title,
+                rating: rating,
+                album_year: album_year,
+                album_month: album_month,
+                album_day: album_day,
+                artist: artist,
+                date: date,
+                best1: best1,
+                best2: best2,
+                best3: best3,
+                genre: album_genre,
+                comment: comment,
+                youtube: youtube
+            }
+            
+            alert('포스트 되었습니다.');
+            const response = await axios.post('http://3.35.178.151:8080/api/upload/review', obj);
+            console.log(response);
         }
-        
-        alert('포스트 되었습니다.');
-        const response = await axios.post('http://3.35.178.151:8080/api/upload/review', obj);
-        console.log(response);
+        else {
+            alert('비밀번호가 틀렸습니다.')
+        }
     }
 
     getReview = async () => {
@@ -113,6 +124,7 @@ class ReviewTab extends React.Component {
     openReview = (index) => {
         this.setState({
             isReviewOpen: true,
+            isTrackOpened: false,
             reviewIndex: index
         })
     }
@@ -124,7 +136,7 @@ class ReviewTab extends React.Component {
     }
 
     render() {
-        const {isLoading, isModalOpen, isReviewOpen, reviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
+        const {isLoading, isModalOpen, isReviewOpen, isTrackOpened, reviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
         var tracklist = [];
         
         if (isReviewOpen) {
@@ -132,6 +144,8 @@ class ReviewTab extends React.Component {
             console.log(tracklist);
         }
         
+        console.log(admin_key);
+
         return (
             <div className="review-container">
                 {isLoading ? (
@@ -153,6 +167,7 @@ class ReviewTab extends React.Component {
                                         <Rating
                                             readOnly
                                             value={reviews[reviewIndex].rating}
+                                            precision={0.5}
                                             style={{
                                                 marginTop: '-1rem'
                                             }}
@@ -174,7 +189,13 @@ class ReviewTab extends React.Component {
                                     <Divider variant="middle" />
                                     <div className="tracklist">
                                         <List component="nav">
-                                            <ListItem dense={true}>
+                                            <ListItem 
+                                                dense={true}
+                                                button
+                                                onClick={() => {
+                                                    this.setState({isTrackOpened : !this.state.isTrackOpened})
+                                                }}
+                                            >
                                                 <ListItemIcon>
                                                     <ViewListIcon style={{ color: '#242d3c' }}/>
                                                 </ListItemIcon>
@@ -183,7 +204,9 @@ class ReviewTab extends React.Component {
                                                         Track List
                                                     </span>
                                                 }/>
+                                                {isTrackOpened ? <ExpandLess /> : <ExpandMore />}
                                             </ListItem>
+                                            <Collapse in={isTrackOpened} timeout="auto" unmountOnExit>
                                             {tracklist.map((track, index) => {
                                                 if (index === reviews[reviewIndex].best1) {
                                                     return (
@@ -250,6 +273,7 @@ class ReviewTab extends React.Component {
                                                     );
                                                 }
                                             })}
+                                            </Collapse>
                                         </List>
                                         <Divider variant="middle" />
                                         <br/>
@@ -534,6 +558,7 @@ class ReviewTab extends React.Component {
                                                         <div className="pre-review-rating">
                                                             <Rating
                                                                 value={review.rating}
+                                                                precision={0.5}
                                                                 readOnly
                                                             />
                                                         </div>
