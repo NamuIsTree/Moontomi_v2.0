@@ -1,0 +1,119 @@
+.date-slash {
+    display: inline-block;
+    color: #3d4146;
+    margin-top: 1.4rem;
+    font-size: 1.5rem;
+}
+
+.review {
+    display: block;
+}
+
+.review-section {
+    margin-top: 1rem;
+    margin-left: 10%;
+    margin-right: 10%;
+
+}
+
+.pre-review-wrapper {
+    display: inline-block;
+    width: 250px;
+    padding: 1rem;
+}
+
+.pre-review {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 1.2;
+    cursor: pointer;
+}
+
+.pre-review:hover {
+    opacity: 90%;
+    transition-property: opacity;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+}
+
+.pre-review-content {
+    position: absolute;
+    padding: 1rem;
+    bottom: 0;
+}
+
+.pre-review-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+}
+
+.pre-review-artist {
+    font-size: 0.9rem;
+    color: rgb(230, 230, 230);
+}
+
+.pre-review-comment {
+    font-size: 0.9rem;
+    color: rgb(231, 231, 231);
+}
+
+
+.review-opened {
+    width: 100%;
+    text-align: center;
+}
+
+.review {
+    display: inline-block;
+    background-color:rgb(245, 245, 245);
+    width: 60%;
+    padding: 2rem;
+    margin: 1rem;
+    border-color: #242d3c;
+    border: 2px solid;
+    border-radius: 20px;
+    text-align: center;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.review-title {
+    font-size: 2rem;
+    font-weight: 700;
+    padding-bottom: 1.3rem;
+}
+
+.album-detail {
+    text-align: center;
+    overflow: hidden;
+}
+
+.album-detail img {
+    width: 40%;
+    max-width: 240px;
+}
+
+.review-order {
+    color: rgb(51,51,51);
+}
+
+.review-album-detail {
+    position: relative;
+    text-align: center;
+    margin-top: -0.7rem;
+    margin-bottom: 1rem;
+}
+
+.album-artist {
+    font-size: 1.2rem;
+}
+
+.album-date {
+    margin-top: 0.2rem;
+    color:rgb(131,131,131);
+}

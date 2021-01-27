@@ -34,7 +34,8 @@ function ShowAlbum ({index, tot, id, name, artist}) {
     return (
         <div className="HOF-album"
              style = {{
-                 backgroundImage: imgsrc
+                 backgroundImage: imgsrc,
+                 cursor: 'pointer'
              }}
              onClick={() => {
                  document.location.href = imglink

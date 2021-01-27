@@ -53,6 +53,7 @@ function LookupAlbum ({index, id, tot, name, artist, nation, rating}) {
             hover 
             role="checkbox"
             tabIndex={-1} 
+            style={{ cursor: 'pointer' }}
             onClick={() => {
                 var linknum = tot + 1 - id;
                 const linkto = '/evaluate/' + linknum;

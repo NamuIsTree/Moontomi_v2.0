@@ -76,6 +76,7 @@ class RegularEval extends React.Component {
             comment: ModalComment
         };
 
+        alert('평가 수정이 완료되었습니다.');
         const response = await axios.post('http://3.35.178.151:8080/api/change/comment', obj);
         console.log(response);
     }
@@ -404,8 +405,7 @@ class RegularEval extends React.Component {
                                                         backgroundColor: 'white',
                                                         border: '2px solid #000',
                                                         width: '30%',
-                                                        padding: '3rem',
-                                                        boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+                                                        padding: '3rem'
                                                     }}
                                                 >
                                                     <div className="modal-edit-comment">
