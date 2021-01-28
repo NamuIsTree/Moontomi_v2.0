@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import TextField from '@material-ui/core/TextField';
@@ -20,19 +21,52 @@ import Divider from '@material-ui/core/Divider';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
+import { withStyles } from '@material-ui/core/styles';
+import Slider from '@material-ui/core/Slider';
 
 import ReactPlayer from 'react-player';
 import './ReviewTab.css';
 
 const admin_key = process.env.REACT_APP_ADMIN_PASSWORD;
 
+const PrettoSlider = withStyles({
+    root: {
+    color: '#242d3c',
+    height: 8,
+  },
+  thumb: {
+    height: 24,
+    width: 24,
+    backgroundColor: '#fff',
+    border: '2px solid currentColor',
+    '&:focus, &:hover, &$active': {
+      boxShadow: 'inherit',
+    },
+  },
+  active: {},
+  valueLabel: {
+    left: 'calc(-50% + 4px)',
+  },
+  track: {
+    height: 8,
+    borderRadius: 4,
+  },
+  rail: {
+    height: 8,
+    borderRadius: 4,
+  },
+})(Slider);
+
 class ReviewTab extends React.Component {
     state = {
         isLoading: true,
         reviews: [],
+        filteredReviews: [],
         isModalOpen: false,
         isReviewOpen: false,
         isTrackOpened: false,
+        sort_method: 0,
+        value:[0, 50],
         reviewIndex: 0,
         text: '',
         tracklist: '',
@@ -89,7 +123,7 @@ class ReviewTab extends React.Component {
 
     getReview = async () => {
         const reviews = await axios.post('http://3.35.178.151:8080/api/get/reviews')
-        this.setState({reviews: reviews.data, isLoading: false});
+        this.setState({reviews: reviews.data, filteredReviews: reviews.data, isLoading: false});
     }
 
     componentDidMount() {
@@ -136,15 +170,14 @@ class ReviewTab extends React.Component {
     }
 
     render() {
-        const {isLoading, isModalOpen, isReviewOpen, isTrackOpened, reviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
+        const {isLoading, isModalOpen, isReviewOpen, isTrackOpened, sort_method, value, reviews, filteredReviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
         var tracklist = [];
         
         if (isReviewOpen) {
             tracklist = reviews[reviewIndex].tracklist.split('\n');
-            console.log(tracklist);
         }
-        
-        console.log(admin_key);
+
+        var range_min = value[0] / 10, range_max = value[1] / 10;
 
         return (
             <div className="review-container">
@@ -210,14 +243,20 @@ class ReviewTab extends React.Component {
                                             {tracklist.map((track, index) => {
                                                 if (index === reviews[reviewIndex].best1) {
                                                     return (
-                                                        <div>
+                                                        <div key={index}>
                                                         <ListItem button dense={true}>
                                                             <ListItemIcon>
                                                                 <StarIcon style={{ color:'#ff8080' }}/>
                                                             </ListItemIcon>
                                                             <ListItemText primary={
-                                                                <span style={{ color: '#ff8080' }}>
-                                                                    {track}
+                                                                <span>
+                                                                    <span style={{ color: '#ff8080' }}>
+                                                                        {track}
+                                                                    </span>
+                                                                    {'   '}
+                                                                    <span style={{ color: '#ff3333', fontSize: '0.7rem' }}>
+                                                                        (추천!)
+                                                                    </span>
                                                                 </span>
                                                             }/>
                                                         </ListItem>
@@ -226,15 +265,21 @@ class ReviewTab extends React.Component {
                                                 }
                                                 else if (index === reviews[reviewIndex].best2) {
                                                     return (
-                                                        <div>
+                                                        <div key={index}>
                                                         <ListItem button dense={true}>
                                                             <ListItemIcon>
                                                                 <StarHalfIcon style={{ color:'#ff8080' }} />
                                                             </ListItemIcon>
                                                             <ListItemText primary={
-                                                                <span style={{ color: '#ff8080' }}>
-                                                                    {track}
-                                                                </span>
+                                                                <span>
+                                                                    <span style={{ color: '#ff8080' }}>
+                                                                        {track}
+                                                                    </span>
+                                                                    {'   '}
+                                                                    <span style={{ color: '#ff3333', fontSize: '0.7rem' }}>
+                                                                        (추천!)
+                                                                    </span>
+                                                            </span>
                                                             }/>
                                                         </ListItem>
                                                         </div>
@@ -242,15 +287,21 @@ class ReviewTab extends React.Component {
                                                 }
                                                 else if (index === reviews[reviewIndex].best3) {
                                                     return (
-                                                        <div>
+                                                        <div key={index}>
                                                         <ListItem button dense={true}>
                                                             <ListItemIcon>
                                                                 <StarBorderIcon style={{ color: '#ff8080' }} />
                                                             </ListItemIcon>
                                                             <ListItemText primary={
-                                                                <span style={{ color: '#ff8080' }}>
-                                                                    {track}
-                                                                </span>
+                                                                <span>
+                                                                    <span style={{ color: '#ff8080' }}>
+                                                                        {track}
+                                                                    </span>
+                                                                    {'   '}
+                                                                    <span style={{ color: '#ff3333', fontSize: '0.7rem' }}>
+                                                                        (추천!)
+                                                                    </span>
+                                                            </span>
                                                             }/>
                                                         </ListItem>
                                                         </div>
@@ -258,7 +309,7 @@ class ReviewTab extends React.Component {
                                                 }
                                                 else {
                                                     return (
-                                                        <div>
+                                                        <div key={index}>
                                                         <ListItem button dense={true}>
                                                             <ListItemIcon>
                                                                 <AlbumIcon style={{ color:'#242d3c' }} />
@@ -311,11 +362,13 @@ class ReviewTab extends React.Component {
                             </div>
                         ) : (
                         <div>
+                            <div className="write-button">
                             <Button
                                 variant="contained"
                                 style={{
                                     marginTop: '1rem',
                                     marginRight: '2rem',
+                                    marginBottom: '0.2rem',
                                     float: 'right'
                                 }}
                                 color="default"
@@ -323,6 +376,7 @@ class ReviewTab extends React.Component {
                                 startIcon={<BorderColorIcon/>}
                                 onClick={this.openModal}
                             >글쓰기</Button>
+                            </div>
                             <Modal
                                 open={isModalOpen}
                                 onClose={this.closeModal}
@@ -535,11 +589,134 @@ class ReviewTab extends React.Component {
                                     </div>
                                 </Fade>
                             </Modal>
+                            <div className="controls">
+                                <PrettoSlider 
+                                    style={{
+                                        width:"33.33333%",
+                                        marginLeft:"33.33333%",
+                                        marginRight:"33.33333%",
+                                        marginTop:"3rem"
+                                    }}
+                                    valueLabelDisplay="on"
+                                    scale={(x) => x / 10}
+                                    max={50}
+                                    value={value}
+                                    onChange={(event, newValue) => {
+                                        this.setState({value: newValue});
+                                    }}
+                                    defaultValue={value} 
+                                />
+                                <Button 
+                                    variant="contained"
+                                    style={{ 
+                                        backgroundColor: '#242d3c', 
+                                        color: '#ffffff',
+                                        marginBottom: '1rem' 
+                                    }}
+                                    onClick={() => {
+                                        var f_Reviews = reviews.filter(r => (r.rating >= range_min && r.rating <= range_max));
+                                        switch(sort_method) {
+                                            case 0:
+                                                f_Reviews = f_Reviews.sort(function(a, b) {
+                                                    return a.id - b.id;
+                                                });
+                                                break;
+                                            case 1:
+                                                f_Reviews = f_Reviews.sort(function(a, b) {
+                                                    return b.id - a.id;
+                                                })
+                                                break;
+                                            case 2:
+                                                f_Reviews = f_Reviews.sort(function(a, b) {
+                                                    return b.rating - a.rating;
+                                                });
+                                                break;
+                                            case 3:
+                                                f_Reviews = f_Reviews.sort(function(a, b) {
+                                                    return a.rating - b.rating;
+                                                });
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        this.setState({filteredReviews: f_Reviews});
+                                    }}
+                                >평점 범위 반영</Button>
+                                <br/>
+                                <ButtonGroup 
+                                    aria-label="outlined primary button group"
+                                >
+                                    <Button 
+                                    color={sort_method === 0 ? "secondary" : "primary"}
+                                    onClick={() => {
+                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        f_Reviews = f_Reviews.sort(function(a, b) {
+                                            return a.id - b.id;
+                                        });
+                                        this.setState({
+                                            sort_method: 0,
+                                            filteredReviews: f_Reviews
+                                        });
+                                    }}>
+                                        <div className="button0">
+                                            작성 순
+                                        </div>
+                                    </Button>
+                                    <Button 
+                                    color={sort_method === 1 ? "secondary" : "primary"}
+                                    onClick={() => {
+                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        f_Reviews = f_Reviews.sort(function(a, b) {
+                                            return b.id - a.id;
+                                        });
+                                        this.setState({
+                                            sort_method: 1,
+                                            filteredReviews: f_Reviews
+                                        });
+                                    }}>
+                                        <div className="button1">
+                                            작성 역순
+                                        </div>
+                                    </Button>
+                                    <Button 
+                                    color={sort_method === 2 ? "secondary" : "primary"}
+                                    onClick={() => {
+                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        f_Reviews = f_Reviews.sort(function(a, b) {
+                                            return b.rating - a.rating;
+                                        });
+                                        this.setState({
+                                            sort_method: 2,
+                                            filteredReviews: f_Reviews
+                                        });
+                                    }}>
+                                        <div className="button2">
+                                            평점 순
+                                        </div>
+                                    </Button>
+                                    <Button 
+                                    color={sort_method === 3 ? "secondary" : "primary"}
+                                    onClick={() => {
+                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        f_Reviews = f_Reviews.sort(function(a, b) {
+                                            return a.rating - b.rating;
+                                        });
+                                        this.setState({
+                                            sort_method: 3,
+                                            filteredReviews: f_Reviews
+                                        });
+                                    }}>
+                                        <div className="button3">
+                                            평점 역순
+                                        </div>
+                                    </Button>
+                                </ButtonGroup>
+                            </div>
                             <div className="pre-review-section">
-                                {reviews.map((review, index) => {
+                                {filteredReviews.map((review, index) => {
                                     const imgsrc ="linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(http://3.35.178.151:3000/images/review/"+review.id+".jpg)"
                                     return (
-                                            <div className="pre-review-wrapper">
+                                            <div key={review.id} className="pre-review-wrapper">
                                                 <div className="pre-review"
                                                     style={{
                                                         backgroundImage: imgsrc

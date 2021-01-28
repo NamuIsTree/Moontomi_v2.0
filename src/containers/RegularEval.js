@@ -163,14 +163,21 @@ class RegularEval extends React.Component {
     }
 
     updateAlbum = async () => {
-        const {album_id, rating} = this.state;
-        const url = 'http://3.35.178.151:8080/api/change/album';
-        const obj = {
-            id: album_id,
-            rating: rating
-        };
-        const response = await axios.post(url, obj);
-        console.log(response);
+        let pw = prompt("관리자 비밀번호를 입력해 주세요.");
+        if (pw == process.env.REACT_APP_ADMIN_PASSWORD) {
+            const {album_id, rating} = this.state;
+            const url = 'http://3.35.178.151:8080/api/change/album';
+            const obj = {
+                id: album_id,
+                rating: rating
+            };
+            const response = await axios.post(url, obj);
+            console.log(response);
+            alert('업데이트 되었습니다.');
+        }
+        else {
+            alert('비밀번호가 틀렸습니다.');
+        }
     }
 
     handleUpdateAlbum(event) {
@@ -181,7 +188,6 @@ class RegularEval extends React.Component {
             .then((response) => {
                 console.log(response);
             })
-            alert("업데이트가 완료되었습니다.\n앨범 정보가 OPEN 상태로 변경됩니다.")
 
             var target_id = this.state.albums.length + 1 - this.state.album_id;
             document.location.href = '/evaluate/' + target_id;

@@ -41,26 +41,32 @@ class AlbumUpload extends React.Component {
             .then((response) => {
                 console.log(response);
             })
-            alert("업로드되었습니다.");
+
+            document.location.reload();
         }   
     }
 
     addAlbum = async () => {
-        const {name, artist, genre, nation, year, volume, list} = this.state;
-        const url = 'http://3.35.178.151:8080/api/upload/album';
-        const obj = {
-            name: name,
-            artist: artist,
-            genre: parseInt(genre),
-            nation: nation,
-            year: parseInt(year),
-            volume: parseInt(volume),
-            isOpen: 0,
-            list: list
-        };
-        console.log(obj);
-        const res = await axios.post(url, obj);
-        console.log(res);
+        let pw = prompt("관리자 비밀번호를 입력해 주세요.");
+        if (pw === process.env.REACT_APP_ADMIN_PASSWORD){
+            const {name, artist, genre, nation, year, volume, list} = this.state;
+            const url = 'http://3.35.178.151:8080/api/upload/album';
+            const obj = {
+                name: name,
+                artist: artist,
+                genre: parseInt(genre),
+                nation: nation,
+                year: parseInt(year),
+                volume: parseInt(volume),
+                isOpen: 0,
+                list: list
+            };
+            const res = await axios.post(url, obj);
+            console.log(res);
+        }
+        else {
+            alert('비밀번호가 틀렸습니다.');
+        }
     }
 
     render() {
