@@ -17,7 +17,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Filter1Icon from '@material-ui/icons/Filter1';
 import Filter2Icon from '@material-ui/icons/Filter2';
 import Filter3Icon from '@material-ui/icons/Filter3';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 
@@ -164,7 +163,7 @@ class RegularEval extends React.Component {
 
     updateAlbum = async () => {
         let pw = prompt("관리자 비밀번호를 입력해 주세요.");
-        if (pw == process.env.REACT_APP_ADMIN_PASSWORD) {
+        if (pw === process.env.REACT_APP_ADMIN_PASSWORD) {
             const {album_id, rating} = this.state;
             const url = 'http://3.35.178.151:8080/api/change/album';
             const obj = {

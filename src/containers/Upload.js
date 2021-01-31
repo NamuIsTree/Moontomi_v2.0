@@ -6,10 +6,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
-import BigText from '../components/BigText';
 import AlbumUpload from './AlbumUpload';
 import CommentPost from './CommentPost';
-import CommentEdit from './CommentEdit';
 import "./Upload.css";
 
 function TabPanel(props) {

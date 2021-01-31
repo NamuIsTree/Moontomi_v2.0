@@ -174,10 +174,12 @@ class ReviewTab extends React.Component {
         var tracklist = [];
         
         if (isReviewOpen) {
-            tracklist = reviews[reviewIndex].tracklist.split('\n');
+            tracklist = filteredReviews[reviewIndex].tracklist.split('\n');
         }
 
         var range_min = value[0] / 10, range_max = value[1] / 10;
+
+        console.log(window.innerWidth);
 
         return (
             <div className="review-container">
@@ -192,14 +194,14 @@ class ReviewTab extends React.Component {
                                 <div className="review">
                                     <div className="album-detail">
                                         <div className="review-order">
-                                            {reviews[reviewIndex].id}번째 Review입니다. ({reviews[reviewIndex].date} 작성)
+                                            {filteredReviews[reviewIndex].id}번째 Review입니다. ({filteredReviews[reviewIndex].date} 작성)
                                         </div>
                                         <div className="review-title">
-                                            {reviews[reviewIndex].title}
+                                            {filteredReviews[reviewIndex].title}
                                         </div>
                                         <Rating
                                             readOnly
-                                            value={reviews[reviewIndex].rating}
+                                            value={filteredReviews[reviewIndex].rating}
                                             precision={0.5}
                                             style={{
                                                 marginTop: '-1rem'
@@ -209,14 +211,14 @@ class ReviewTab extends React.Component {
                                         <div className="review-album-detail">
                                             <div className="review-album-artist-date">
                                                 <div className="album-artist">
-                                                    [{reviews[reviewIndex].artist}]의 앨범 <br/>
+                                                    [{filteredReviews[reviewIndex].artist}]의 앨범 <br/>
                                                 </div>
                                                 <div className="album-date">
-                                                    {reviews[reviewIndex].album_year}년 {reviews[reviewIndex].album_month}월 {reviews[reviewIndex].album_day}일 발매
+                                                    {filteredReviews[reviewIndex].album_year}년 {filteredReviews[reviewIndex].album_month}월 {filteredReviews[reviewIndex].album_day}일 발매
                                                 </div>
                                             </div>
                                         </div>
-                                        <img src={'http://3.35.178.151:3000/images/review/'+reviews[reviewIndex].id+'.jpg'} alt="album cover"/>
+                                        <img src={'http://3.35.178.151:3000/images/review/'+filteredReviews[reviewIndex].id+'.jpg'} alt="album cover"/>
                                     </div>
                                     <br/>
                                     <Divider variant="middle" />
@@ -241,7 +243,7 @@ class ReviewTab extends React.Component {
                                             </ListItem>
                                             <Collapse in={isTrackOpened} timeout="auto" unmountOnExit>
                                             {tracklist.map((track, index) => {
-                                                if (index === reviews[reviewIndex].best1) {
+                                                if (index === filteredReviews[reviewIndex].best1) {
                                                     return (
                                                         <div key={index}>
                                                         <ListItem button dense={true}>
@@ -263,7 +265,7 @@ class ReviewTab extends React.Component {
                                                         </div>
                                                     );
                                                 }
-                                                else if (index === reviews[reviewIndex].best2) {
+                                                else if (index === filteredReviews[reviewIndex].best2) {
                                                     return (
                                                         <div key={index}>
                                                         <ListItem button dense={true}>
@@ -285,7 +287,7 @@ class ReviewTab extends React.Component {
                                                         </div>
                                                     );
                                                 }
-                                                else if (index === reviews[reviewIndex].best3) {
+                                                else if (index === filteredReviews[reviewIndex].best3) {
                                                     return (
                                                         <div key={index}>
                                                         <ListItem button dense={true}>
@@ -329,15 +331,16 @@ class ReviewTab extends React.Component {
                                         <Divider variant="middle" />
                                         <br/>
                                         <div className="review-text">
-                                            {reviews[reviewIndex].text}
+                                            {filteredReviews[reviewIndex].text}
                                         </div>
                                         <br/>
                                         <div className="video-wrapper">
                                             <ReactPlayer
-                                                url={reviews[reviewIndex].youtube}
+                                                url={filteredReviews[reviewIndex].youtube}
                                                 playing
                                                 loop={true}
-                                                controls={false}
+                                                controls={true}
+                                                volume={0.8}
                                                 width="320px"
                                                 height="180px"
                                                 style={{
