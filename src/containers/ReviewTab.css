@@ -51,12 +51,21 @@
     }
 }
 
-@media (min-width: 1325px) {
+@media (min-width: 1325px) and  (max-width: 1589px) {
     .pre-review-section {
         display: flex;
         flex-wrap: wrap;
         width: 1325px;
         margin-left: calc((100vw - 1325px) / 2 - 1.5rem);
+    }
+}
+
+@media (min-width: 1590px) {
+    .pre-review-section {
+        display: flex;
+        flex-wrap: wrap;
+        width: 1590px;
+        margin-left: calc((100vw - 1590px) / 2 - 1.5rem);
     }
 }
 
@@ -73,16 +82,31 @@
     height: 250px;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 250px;
     opacity: 1.2;
     cursor: pointer;
+    overflow: hidden;
+
+    -webkit-transition: background-size .5s ease-in-out;
+    -moz-transition: background-size .5s ease-in-out;
+    -ms-transition: background-size .5s ease-in-out;
+    -o-transition: background-size .5s ease-in-out;
+    transition: background-size .5s ease-in-out;
 }
 
 .pre-review:hover {
     opacity: 90%;
-    transition-property: opacity;
-    transition-duration: 1s;
-    transition-timing-function: ease;
+
+    background: inherit;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 260px;
+
+    -webkit-transition: all.3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .pre-review-content {

@@ -66,7 +66,7 @@ class ReviewTab extends React.Component {
         isReviewOpen: false,
         isTrackOpened: false,
         sort_method: 0,
-        value:[0, 50],
+        value:[0, 10],
         reviewIndex: 0,
         text: '',
         tracklist: '',
@@ -177,7 +177,7 @@ class ReviewTab extends React.Component {
             tracklist = filteredReviews[reviewIndex].tracklist.split('\n');
         }
 
-        var range_min = value[0] / 10, range_max = value[1] / 10;
+        var range_min = value[0] / 2, range_max = value[1] / 2;
 
         console.log(window.innerWidth);
 
@@ -601,8 +601,8 @@ class ReviewTab extends React.Component {
                                         marginTop:"3rem"
                                     }}
                                     valueLabelDisplay="on"
-                                    scale={(x) => x / 10}
-                                    max={50}
+                                    scale={(x) => x / 2}
+                                    max={10}
                                     value={value}
                                     onChange={(event, newValue) => {
                                         this.setState({value: newValue});
