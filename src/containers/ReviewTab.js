@@ -23,7 +23,13 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
-
+import Popper from '@material-ui/core/Popper';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
 import ReactPlayer from 'react-player';
 import './ReviewTab.css';
 
@@ -65,6 +71,17 @@ class ReviewTab extends React.Component {
         isModalOpen: false,
         isReviewOpen: false,
         isTrackOpened: false,
+        isGenreOpened: false,
+        anchorEl: null,
+        b1: true,
+        b2: true,
+        b3: true,
+        b4: true,
+        b5: true,
+        b6: true,
+        b7: true,
+        b8: true,
+        b9: true,
         sort_method: 0,
         value:[0, 10],
         reviewIndex: 0,
@@ -159,6 +176,7 @@ class ReviewTab extends React.Component {
         this.setState({
             isReviewOpen: true,
             isTrackOpened: false,
+            isGenreOpened: false,
             reviewIndex: index
         })
     }
@@ -170,7 +188,7 @@ class ReviewTab extends React.Component {
     }
 
     render() {
-        const {isLoading, isModalOpen, isReviewOpen, isTrackOpened, sort_method, value, reviews, filteredReviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
+        const {isLoading, isModalOpen, isReviewOpen, isTrackOpened, isGenreOpened, sort_method, value, reviews, filteredReviews, reviewIndex, album_year, album_month, album_day, album_genre} = this.state;
         var tracklist = [];
         
         if (isReviewOpen) {
@@ -178,8 +196,6 @@ class ReviewTab extends React.Component {
         }
 
         var range_min = value[0] / 2, range_max = value[1] / 2;
-
-        console.log(window.innerWidth);
 
         return (
             <div className="review-container">
@@ -364,7 +380,7 @@ class ReviewTab extends React.Component {
                                 </center>
                             </div>
                         ) : (
-                        <div>
+                        <div className="pre-reviews">
                             <div className="write-button">
                             <Button
                                 variant="contained"
@@ -609,6 +625,194 @@ class ReviewTab extends React.Component {
                                     }}
                                     defaultValue={value} 
                                 />
+                                <Button type="button" 
+                                    onClick={(event) => {
+                                        this.setState({
+                                            isGenreOpened: !isGenreOpened,
+                                            anchorEl: event.currentTarget
+                                        });
+                                    }}
+                                    variant="contained"
+                                    style={{ 
+                                        backgroundColor: '#242d3c', 
+                                        color: '#ffffff',
+                                        marginBottom: '1rem',
+                                        marginRight: '1rem'
+                                    }}
+
+                                >
+                                    장르
+                                </Button>
+                                <Popper open={isGenreOpened} anchorEl={this.state.anchorEl} >
+                                    <div className="genre-selection">
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">장르 선택</FormLabel>
+                                            <FormGroup>
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b1}
+                                                        onChange={(event) => {
+                                                            this.setState({b1: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="POP"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b2}
+                                                        onChange={(event) => {
+                                                            this.setState({b2: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="R&B/SOUL"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b3}
+                                                        onChange={(event) => {
+                                                            this.setState({b3: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="ROCK"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b4}
+                                                        onChange={(event) => {
+                                                            this.setState({b4: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="J-POP"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b5}
+                                                        onChange={(event) => {
+                                                            this.setState({b5: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="JAZZ"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b6}
+                                                        onChange={(event) => {
+                                                            this.setState({b6: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="HIPHOP"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b7}
+                                                        onChange={(event) => {
+                                                            this.setState({b7: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="ELECTRONIC"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b9}
+                                                        onChange={(event) => {
+                                                            this.setState({b9: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="FOLK"
+                                                />
+                                                <FormControlLabel 
+                                                    control={<Checkbox 
+                                                        checked={this.state.b8}
+                                                        onChange={(event) => {
+                                                            this.setState({b8: event.target.checked});
+                                                        }}
+                                                    />}
+                                                    label="OTHERS"
+                                                />
+                                            </FormGroup>
+                                            <FormHelperText>
+                                                선택한 장르에 포함되는 앨범들의 비평이 제공됩니다.
+                                            </FormHelperText>
+                                            <center>
+                                            <Button
+                                                variant="contained"
+                                                style={{
+                                                    width: "20px",
+                                                    backgroundColor:"#ff8080",
+                                                    color: "rgb(255, 255, 255)"
+                                                }}
+                                                onClick={() => {
+                                                    var genrelist = [];
+                                                    if (this.state.b1 === true) {
+                                                        genrelist.push("1");
+                                                    }
+                                                    if (this.state.b2 === true) {
+                                                        genrelist.push("2");
+                                                    }
+                                                    if (this.state.b3 === true) {
+                                                        genrelist.push("3");
+                                                    }
+                                                    if (this.state.b4 === true) {
+                                                        genrelist.push("4");
+                                                    }
+                                                    if (this.state.b5 === true) {
+                                                        genrelist.push("5");
+                                                    }
+                                                    if (this.state.b6 === true) {
+                                                        genrelist.push("6");
+                                                    }
+                                                    if (this.state.b7 === true) {
+                                                        genrelist.push("7");
+                                                    }
+                                                    if (this.state.b8 === true) {
+                                                        genrelist.push("8");
+                                                    }
+                                                    if (this.state.b9 === true) {
+                                                        genrelist.push("9");
+                                                    }
+                                                    var f_Reviews = reviews.filter(r => {
+                                                        var cnt = 0;
+                                                        genrelist.forEach(g => {
+                                                            if (String(r.genre).includes(g)) {
+                                                                cnt = 1;
+                                                            }
+                                                        });
+
+                                                        return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                                    });
+                                                    switch(sort_method) {
+                                                        case 0:
+                                                            f_Reviews = f_Reviews.sort(function(a, b) {
+                                                                return a.id - b.id;
+                                                            });
+                                                            break;
+                                                        case 1:
+                                                            f_Reviews = f_Reviews.sort(function(a, b) {
+                                                                return b.id - a.id;
+                                                            })
+                                                            break;
+                                                        case 2:
+                                                            f_Reviews = f_Reviews.sort(function(a, b) {
+                                                                return b.rating - a.rating;
+                                                            });
+                                                            break;
+                                                        case 3:
+                                                            f_Reviews = f_Reviews.sort(function(a, b) {
+                                                                return a.rating - b.rating;
+                                                            });
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                    this.setState({isGenreOpened: false, filteredReviews: f_Reviews});
+                                                }}
+                                            >
+                                                결정
+                                            </Button>
+                                            </center>
+                                        </FormControl>
+                                    </div>
+                                </Popper>
                                 <Button 
                                     variant="contained"
                                     style={{ 
@@ -617,7 +821,44 @@ class ReviewTab extends React.Component {
                                         marginBottom: '1rem' 
                                     }}
                                     onClick={() => {
-                                        var f_Reviews = reviews.filter(r => (r.rating >= range_min && r.rating <= range_max));
+                                        var genrelist = [];
+                                        if (this.state.b1 === true) {
+                                            genrelist.push("1");
+                                        }
+                                        if (this.state.b2 === true) {
+                                            genrelist.push("2");
+                                        }
+                                        if (this.state.b3 === true) {
+                                            genrelist.push("3");
+                                        }
+                                        if (this.state.b4 === true) {
+                                            genrelist.push("4");
+                                        }
+                                        if (this.state.b5 === true) {
+                                            genrelist.push("5");
+                                        }
+                                        if (this.state.b6 === true) {
+                                            genrelist.push("6");
+                                        }
+                                        if (this.state.b7 === true) {
+                                            genrelist.push("7");
+                                        }
+                                        if (this.state.b8 === true) {
+                                            genrelist.push("8");
+                                        }
+                                        if (this.state.b9 === true) {
+                                            genrelist.push("9");
+                                        }
+                                        var f_Reviews = reviews.filter(r => {
+                                            var cnt = 0;
+                                            genrelist.forEach(g => {
+                                                if (String(r.genre).includes(g)) {
+                                                    cnt = 1;
+                                                }
+                                            });
+
+                                            return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                        });
                                         switch(sort_method) {
                                             case 0:
                                                 f_Reviews = f_Reviews.sort(function(a, b) {
@@ -652,7 +893,44 @@ class ReviewTab extends React.Component {
                                     <Button 
                                     color={sort_method === 0 ? "secondary" : "primary"}
                                     onClick={() => {
-                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        var genrelist = [];
+                                        if (this.state.b1 === true) {
+                                            genrelist.push("1");
+                                        }
+                                        if (this.state.b2 === true) {
+                                            genrelist.push("2");
+                                        }
+                                        if (this.state.b3 === true) {
+                                            genrelist.push("3");
+                                        }
+                                        if (this.state.b4 === true) {
+                                            genrelist.push("4");
+                                        }
+                                        if (this.state.b5 === true) {
+                                            genrelist.push("5");
+                                        }
+                                        if (this.state.b6 === true) {
+                                            genrelist.push("6");
+                                        }
+                                        if (this.state.b7 === true) {
+                                            genrelist.push("7");
+                                        }
+                                        if (this.state.b8 === true) {
+                                            genrelist.push("8");
+                                        }
+                                        if (this.state.b9 === true) {
+                                            genrelist.push("9");
+                                        }
+                                        var f_Reviews = reviews.filter(r => {
+                                            var cnt = 0;
+                                            genrelist.forEach(g => {
+                                                if (String(r.genre).includes(g)) {
+                                                    cnt = 1;
+                                                }
+                                            });
+
+                                            return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                        });
                                         f_Reviews = f_Reviews.sort(function(a, b) {
                                             return a.id - b.id;
                                         });
@@ -668,7 +946,44 @@ class ReviewTab extends React.Component {
                                     <Button 
                                     color={sort_method === 1 ? "secondary" : "primary"}
                                     onClick={() => {
-                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        var genrelist = [];
+                                        if (this.state.b1 === true) {
+                                            genrelist.push("1");
+                                        }
+                                        if (this.state.b2 === true) {
+                                            genrelist.push("2");
+                                        }
+                                        if (this.state.b3 === true) {
+                                            genrelist.push("3");
+                                        }
+                                        if (this.state.b4 === true) {
+                                            genrelist.push("4");
+                                        }
+                                        if (this.state.b5 === true) {
+                                            genrelist.push("5");
+                                        }
+                                        if (this.state.b6 === true) {
+                                            genrelist.push("6");
+                                        }
+                                        if (this.state.b7 === true) {
+                                            genrelist.push("7");
+                                        }
+                                        if (this.state.b8 === true) {
+                                            genrelist.push("8");
+                                        }
+                                        if (this.state.b9 === true) {
+                                            genrelist.push("9");
+                                        }
+                                        var f_Reviews = reviews.filter(r => {
+                                            var cnt = 0;
+                                            genrelist.forEach(g => {
+                                                if (String(r.genre).includes(g)) {
+                                                    cnt = 1;
+                                                }
+                                            });
+
+                                            return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                        });
                                         f_Reviews = f_Reviews.sort(function(a, b) {
                                             return b.id - a.id;
                                         });
@@ -684,7 +999,44 @@ class ReviewTab extends React.Component {
                                     <Button 
                                     color={sort_method === 2 ? "secondary" : "primary"}
                                     onClick={() => {
-                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        var genrelist = [];
+                                        if (this.state.b1 === true) {
+                                            genrelist.push("1");
+                                        }
+                                        if (this.state.b2 === true) {
+                                            genrelist.push("2");
+                                        }
+                                        if (this.state.b3 === true) {
+                                            genrelist.push("3");
+                                        }
+                                        if (this.state.b4 === true) {
+                                            genrelist.push("4");
+                                        }
+                                        if (this.state.b5 === true) {
+                                            genrelist.push("5");
+                                        }
+                                        if (this.state.b6 === true) {
+                                            genrelist.push("6");
+                                        }
+                                        if (this.state.b7 === true) {
+                                            genrelist.push("7");
+                                        }
+                                        if (this.state.b8 === true) {
+                                            genrelist.push("8");
+                                        }
+                                        if (this.state.b9 === true) {
+                                            genrelist.push("9");
+                                        }
+                                        var f_Reviews = reviews.filter(r => {
+                                            var cnt = 0;
+                                            genrelist.forEach(g => {
+                                                if (String(r.genre).includes(g)) {
+                                                    cnt = 1;
+                                                }
+                                            });
+
+                                            return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                        });
                                         f_Reviews = f_Reviews.sort(function(a, b) {
                                             return b.rating - a.rating;
                                         });
@@ -700,7 +1052,44 @@ class ReviewTab extends React.Component {
                                     <Button 
                                     color={sort_method === 3 ? "secondary" : "primary"}
                                     onClick={() => {
-                                        var f_Reviews = reviews.filter(review => (review.rating >= range_min && review.rating <= range_max));
+                                        var genrelist = [];
+                                        if (this.state.b1 === true) {
+                                            genrelist.push("1");
+                                        }
+                                        if (this.state.b2 === true) {
+                                            genrelist.push("2");
+                                        }
+                                        if (this.state.b3 === true) {
+                                            genrelist.push("3");
+                                        }
+                                        if (this.state.b4 === true) {
+                                            genrelist.push("4");
+                                        }
+                                        if (this.state.b5 === true) {
+                                            genrelist.push("5");
+                                        }
+                                        if (this.state.b6 === true) {
+                                            genrelist.push("6");
+                                        }
+                                        if (this.state.b7 === true) {
+                                            genrelist.push("7");
+                                        }
+                                        if (this.state.b8 === true) {
+                                            genrelist.push("8");
+                                        }
+                                        if (this.state.b9 === true) {
+                                            genrelist.push("9");
+                                        }
+                                        var f_Reviews = reviews.filter(r => {
+                                            var cnt = 0;
+                                            genrelist.forEach(g => {
+                                                if (String(r.genre).includes(g)) {
+                                                    cnt = 1;
+                                                }
+                                            });
+
+                                            return (cnt === 1 && r.rating >= range_min && r.rating <= range_max);
+                                        });
                                         f_Reviews = f_Reviews.sort(function(a, b) {
                                             return a.rating - b.rating;
                                         });
