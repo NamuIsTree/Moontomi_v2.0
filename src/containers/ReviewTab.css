@@ -142,6 +142,7 @@
     display: inline-block;
     background-color:rgb(245, 245, 245);
     width: 60%;
+    min-width: 325px;
     padding: 2rem;
     margin: 1rem;
     border-color: #242d3c;
@@ -174,7 +175,7 @@
 
 .album-detail img {
     width: 40%;
-    max-width: 240px;
+    max-width: 280px;
 }
 
 .review-order {
@@ -202,7 +203,7 @@
     text-align: left;
     padding-bottom: 1rem;
     width: 50%;
-    min-width: 400px;
+    min-width: 320px;
     line-height: 1.5em;
 }
 

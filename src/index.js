@@ -17,6 +17,7 @@ ReactDOM.render(
             <IndexRoute component={Home}/>
             <Route path="evaluate/:id" component={RegularEval}/>
             <Route path="review" component={ReviewTab}/>
+            <Route path="review/:id" component={ReviewTab}/>
             <Route path="lookup" component={Lookup}/>
             <Route path="upload" component={Upload}/>
         </Route>

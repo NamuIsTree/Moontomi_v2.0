@@ -47,8 +47,10 @@
     font-size: 1.1rem;
 }
 
-.HOF-albums {
+.HOF-wrapper {
+    width: 100%;
     overflow: hidden;
+    object-fit: cover;
 }
 
 .HOF-album {

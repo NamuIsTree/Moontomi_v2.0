@@ -19,10 +19,22 @@
     src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff');
 }
 
+.Banner-section {
+    width: 100%;
+    text-align: center;
+}
+
+.ad-clickmon {
+    display: inline-block;
+    width: 100%;
+    margin-top: 9%;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
 
 .Banner {
     display: block;
-    margin-top: 9%;
+    text-align: left;
     width: 100%;
     height: 147px;
     color: white;

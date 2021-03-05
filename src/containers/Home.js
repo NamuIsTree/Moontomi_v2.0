@@ -148,19 +148,21 @@ class Home extends React.Component {
                             </Button>
                         </ButtonGroup>
                     </div>
-                    <div className="HOF-albums">
-                        <Slider {...settings}>
-                            {albums.map(album => (
-                                <ShowAlbum 
-                                    key = {order}
-                                    index = {order++}
-                                    tot = {this.state.len}
-                                    id = {album.id}
-                                    name = {album.name}
-                                    artist = {album.artist}
-                                />
-                            ))}
-                        </Slider>
+                    <div className= "HOF-wrapper">
+                        <div className="HOF-albums">
+                            <Slider {...settings}>
+                                {albums.map(album => (
+                                    <ShowAlbum 
+                                        key = {order}
+                                        index = {order++}
+                                        tot = {this.state.len}
+                                        id = {album.id}
+                                        name = {album.name}
+                                        artist = {album.artist}
+                                    />
+                                ))}
+                            </Slider>
+                        </div>
                     </div>
                     </center>
                     <div className="home-comment">

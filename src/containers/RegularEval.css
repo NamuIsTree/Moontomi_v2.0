@@ -29,7 +29,7 @@
 .regular-evaluation-analysis {
     padding: 1rem;
     position: relative;
-    width: 40%;
+    width: 38%;
     max-width: 350px;
     left: 50%;
     float: left;
@@ -40,6 +40,12 @@
     font-family: 'hanna', serif;
     margin-top: 15%;
     font-size: 3rem;
+}
+
+@media (max-width: 600px) {
+    .regular-evaluation-chart {
+        display: none;
+    }
 }
 
 .regular-evaluation-title {
