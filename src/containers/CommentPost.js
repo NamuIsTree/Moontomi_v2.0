@@ -231,7 +231,7 @@ class CommentPost extends React.Component {
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="BEST 3" variant="outlined" />}
                             /> <br/> <br/>
 
-                            4. 앨범 한줄평을 적어주세요. ("" 대신 「 」를 사용해 주세요.) <br/><br/>
+                            4. 앨범 한줄평을 적어주세요.<br/><br/>
                             <TextField
                                 type="text"
                                 id="standard-multiline-static"

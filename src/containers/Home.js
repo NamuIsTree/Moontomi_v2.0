@@ -91,6 +91,7 @@ class Home extends React.Component {
         const settings = {
             className: "album-container",
             dots: true,
+            arrows: false,
             infinite: true,
             autoplay: true,
             autoplaySpeed: 2500,

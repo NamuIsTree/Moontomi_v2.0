@@ -235,7 +235,7 @@ class Lookup extends React.Component {
                                 });
                             }}>
                                 <div className="button2">
-                                    평점 순
+                                    높은 평점순
                                 </div>
                             </Button>
                             <Button 
@@ -246,7 +246,7 @@ class Lookup extends React.Component {
                                 });
                             }}>
                                 <div className="button3">
-                                    평점 역순
+                                    낮은 평점순
                                 </div>
                             </Button>
                     </ButtonGroup>

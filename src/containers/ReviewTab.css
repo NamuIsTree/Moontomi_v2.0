@@ -200,10 +200,10 @@
 
 .review-text {
     display: inline-block;
-    text-align: left;
+    text-align: justify;
     padding-bottom: 1rem;
     width: 50%;
-    min-width: 320px;
+    min-width: 400px;
     line-height: 1.5em;
 }
 

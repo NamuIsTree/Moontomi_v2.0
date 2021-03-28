@@ -49,8 +49,6 @@
 
 .HOF-wrapper {
     width: 100%;
-    overflow: hidden;
-    object-fit: cover;
 }
 
 .HOF-album {
@@ -69,9 +67,14 @@
     width: 80%;
     max-width: 380px;
     height: 24rem;
-    margin: 1rem;
-    
+
+    z-index: 0;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.slick-dots {
+    position: absolute;
+    z-index: 10;
 }
 
 .HOF-album:hover {
@@ -83,7 +86,6 @@
     background-color: rgba(255,255,255,0.5);
     border-radius: 20px;
     margin-top: 25rem;
-    margin-bottom: 10%;
     position: bottom;
     z-index: 3;
 }

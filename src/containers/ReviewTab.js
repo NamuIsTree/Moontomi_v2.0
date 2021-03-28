@@ -82,7 +82,7 @@ class ReviewTab extends React.Component {
         b7: true,
         b8: true,
         b9: true,
-        sort_method: 0,
+        sort_method: 1,
         value:[0, 10],
         reviewIndex: 0,
         text: '',
@@ -140,7 +140,7 @@ class ReviewTab extends React.Component {
 
     getReview = async () => {
         const reviews = await axios.post('http://3.35.178.151:8080/api/get/reviews')
-        this.setState({reviews: reviews.data, filteredReviews: reviews.data, isLoading: false});
+        this.setState({reviews: reviews.data, filteredReviews: reviews.data.reverse(), isLoading: false});
     }
 
     componentDidMount() {
@@ -940,7 +940,7 @@ class ReviewTab extends React.Component {
                                         });
                                     }}>
                                         <div className="button0">
-                                            작성 순
+                                            작성순
                                         </div>
                                     </Button>
                                     <Button 
@@ -993,7 +993,7 @@ class ReviewTab extends React.Component {
                                         });
                                     }}>
                                         <div className="button1">
-                                            작성 역순
+                                            최신순
                                         </div>
                                     </Button>
                                     <Button 
@@ -1046,7 +1046,7 @@ class ReviewTab extends React.Component {
                                         });
                                     }}>
                                         <div className="button2">
-                                            평점 순
+                                            높은 평점순
                                         </div>
                                     </Button>
                                     <Button 
@@ -1099,7 +1099,7 @@ class ReviewTab extends React.Component {
                                         });
                                     }}>
                                         <div className="button3">
-                                            평점 역순
+                                            낮은 평점순
                                         </div>
                                     </Button>
                                 </ButtonGroup>
