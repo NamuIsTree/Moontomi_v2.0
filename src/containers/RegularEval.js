@@ -378,23 +378,23 @@ class RegularEval extends React.Component {
                             {album_comments.map((comment, index) => {
                                 return (
                                     <div key= {comment.id} className="album-comment">
-                                        <span className="album-comment-name">
-                                            [{comment.nickname}]
-                                        </span>
-                                        <span className="album-comment-name-additional">
-                                            님의 평가입니다. (#{comment.id})
-                                            <IconButton
+                                        <IconButton
                                                 aria-label="edit comment"
                                                 className="edit-button"
                                                 onClick={(event) => {
                                                     this.openModal(index);
                                                 }}
                                                 style={{
-                                                    marginBottom: '0.1rem'
+                                                    marginTop: '-0.5rem'
                                                 }}
                                             >
-                                                <EditRoundedIcon />
-                                            </IconButton>
+                                            <EditRoundedIcon />
+                                        </IconButton>
+                                        <span className="album-comment-name">
+                                            [{comment.nickname}]
+                                        </span>
+                                        <span className="album-comment-name-additional">
+                                            님의 평가입니다. (#{comment.id})
                                             <Modal
                                                 open={isModalOpen}
                                                 onClose={this.closeModal}
@@ -572,7 +572,10 @@ class RegularEval extends React.Component {
                                                     <span className="one-line-comment-detail">
                                                         {'<'}앨범 한줄평{'>'}
                                                     </span>
-                                                    <br/> <br/> {comment.comment}
+                                                    <br/> <br/>
+                                                    <span className="one-line-comment-text">
+                                                        {comment.comment}
+                                                    </span>
                                                 </div>
                                             </div>
                                             ) : (

@@ -152,5 +152,10 @@
 .one-line-comment-detail {
     font-size: 1.1rem;
     font-weight: 600;
+}
 
+.one-line-comment-text {
+    display: inline-block;
+    line-height: 1.5em;
+    width: 90%;
 }
