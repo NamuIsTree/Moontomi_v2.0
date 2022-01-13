@@ -20,6 +20,7 @@ import Filter3Icon from '@material-ui/icons/Filter3';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 
+import Marquee from 'react-fast-marquee';
 import './RegularEval.css'
 
 class RegularEval extends React.Component {
@@ -45,7 +46,8 @@ class RegularEval extends React.Component {
         album_year: 0,
         album_isOpen: false,
         album_comments: [],
-        rating: 0.0
+        rating: 0.0,
+	tag: 'title',
     }
 
     constructor(props) {
@@ -124,8 +126,12 @@ class RegularEval extends React.Component {
     }
 
     handleValueChange(event) {
+	let ntag = 'title';
         if (event.target.value > this.state.albums.length) event.target.value = this.state.albums.length;
         if (event.target.value < 1) event.target.value = 1;
+	if (event.target.value === 50 || event.target.value === '50') {
+		ntag = 'special';
+	}
 
         var name, artist, genre, nation, year, list, isOpen, comments, rating;
 
@@ -157,7 +163,8 @@ class RegularEval extends React.Component {
             album_year: year,
             album_list: list,
             album_comments: comments,
-            rating: rating
+            rating: rating,
+	    tag: ntag
         });
     }
 
@@ -204,6 +211,10 @@ class RegularEval extends React.Component {
         }
         else id = 1;
 
+	let tag = 'title';
+	if (album.data.length + 1 - id  === 50) {
+		tag = 'special';
+	}
         this.setState({
             album_id: album.data.length + 1 - id,
             album_name: album.data[album.data.length - id].name,
@@ -213,7 +224,8 @@ class RegularEval extends React.Component {
             album_year: album.data[album.data.length - id].year,
             album_list: album.data[album.data.length - id].list.split('\n'),
             album_isOpen: album.data[album.data.length - id].isOpen,
-            albums: album.data
+            albums: album.data,
+	    tag: tag
         })
     }
 
@@ -297,6 +309,8 @@ class RegularEval extends React.Component {
         labels.push("Others");
         data.push(res.toFixed(2));
 
+        console.log(this.state.tag);
+
         return (
             <div className="regular-evaluation">
                 {isLoading ? (
@@ -313,10 +327,14 @@ class RegularEval extends React.Component {
                                 inputProps={{
                                     pattern: '[0-9]*'
                                 }}
+				style={{backgroundColor: 'white', zIndex: '10'}}
                                 name="album_id"
                                 onChange={this.handleValueChange}
                             />
-                            회 정기 음평회 <br/>
+		            <span className={this.state.tag}>
+			    {this.state.tag === 'special' ? "회★정기★음평회" : "회 정기 음평회"}
+			    </span>
+			    <br/>
                         </div>
                         <div className="evaluation-album-title">
                             {album_name}

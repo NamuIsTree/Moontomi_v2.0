@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>moontomiv2.md</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="moontomi-2.0-dev-blueprint">MoonTomi 2.0 Dev Blueprint</h1>
+<p>차기 MoonTomi 웹 서비스를 위한 개발 청사진</p>
+<h2 id="웹-구축">웹 구축</h2>
+<ul>
+<li>
+<p>Tech Stack</p>
+<blockquote>
+<p>React.js (SPA) + Tomcat (WAS) + Sprint Boot (Web Server)</p>
+</blockquote>
+</li>
+<li>
+<p>URIs</p>
+<ul>
+<li>
+<p>admin (관리자 화면)</p>
+<ul>
+<li>/admin<br>
+<code>Admin.js : Admin 기능 지원</code><br>
+<code>Admin 기능 : 정기 비평글 작성, 데이터 추가/삭제/갱신</code></li>
+</ul>
+</li>
+<li>
+<p>general (일반 화면)</p>
+<ul>
+<li>/home<br>
+<code>Home.js : 명예의 전당, 검색 기능 지원</code><br>
+<code>검색기능은 우선순위가 높지 않음</code><br>
+<code>명예의 전당 (최근 N개월 명예의 전당으로 수정하는 건 어떨까...)</code></li>
+<li>/regular/{id}<br>
+/regular/* : 정기 음평회 메인 페이지 (latest 음평회)<br>
+<code>Regular.js : 정기 음평회</code><br>
+<code>현재 방식을 유지할 수 있으면 좋겠지만, SEO를 고려하여 리모델링 할 예정</code></li>
+<li>/review<br>
+<code>Review.js : 비평 메인 페이지</code><br>
+<code>Main Page를 통해 single tab과 album tab을 한방에 보여주면서도 복잡하지 않게</code>
+<ul>
+<li>/single/{id}<br>
+<code>Single.js : 싱글 트랙 비평</code><br>
+<code>UI 고려해야함</code></li>
+<li>/album/{id}<br>
+<code>Album.js : 앨범 총평</code><br>
+<code>현재 스타일을 유지하되, 필터링 기능은 수정해야함</code></li>
+</ul>
+</li>
+<li>/lookup<br>
+<code>Lookup.js : 둘러보기 (정기 음평회용)</code><br>
+<code>둘러보기 : 전체 / Season별 / 장르별 순위 (순위 지정 방식 고려중)</code><br>
+<code>작은 화면에서 더 가시적으로 볼 수 있는 방법을 찾아야해...</code></li>
+</ul>
+</li>
+<li>
+<p>Components</p>
+<ul>
+<li>
+<p>Header<br>
+<code>HeaderMain.js : 홈 화면 Header (for Homepage)</code><br>
+<code>HeaderSub.js : 서브 화면 Header (for other pages)</code><br>
+<code>Pitchfork / HIPHOPLE style을 따라해볼까 생각중</code></p>
+</li>
+<li>
+<p>Footer<br>
+<code>Footer.js : Footer</code><br>
+<code>'문형규의 토요일 : 음악에 미치는 날'</code><br>
+<code>제작자, 운영자를 지금과 다른 방식으로 보여줄 수 있을까...</code></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="api-구축">API 구축</h2>
+<ul>
+<li>Tech Stack (미정)
+<blockquote>
+<p>Node.js Express<br>
+GraphQL + Apollo</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="db-구축">DB 구축</h2>
+<ul>
+<li>
+<p>Tech Stack</p>
+<blockquote>
+<p>MariaDB</p>
+</blockquote>
+</li>
+<li>
+<p>Tables (or Collections)</p>
+<ul>
+<li>
+<p>Artists</p>
+<blockquote>
+<p>artist_id : artist id<br>
+artist : 실제 이름 (영어, 한국어, 한자 … 등등)<br>
+pron : 한국식 발음<br>
+nation : 국적 (한국, 일본, 미국, 프랑스 … )</p>
+</blockquote>
+</li>
+<li>
+<p>Albums</p>
+<blockquote>
+<p>album_id : id<br>
+artist_id : artist id<br>
+album_name : 앨범명<br>
+release : 발매일 (timestamp)</p>
+</blockquote>
+</li>
+<li>
+<p>Album_gen</p>
+<blockquote>
+<p>album_id : album id<br>
+genre : 장르</p>
+</blockquote>
+</li>
+<li>
+<p>Genres</p>
+<blockquote>
+<p>genre : 장르</p>
+</blockquote>
+</li>
+<li>
+<p>Tracks</p>
+<blockquote>
+<p>album_id : album id<br>
+track_num : 트랙 번호</p>
+</blockquote>
+</li>
+<li>
+<p>Single Reviews</p>
+<blockquote>
+<p>single_id : single id<br>
+writer : 작성자 닉네임 … 설정 안하면 랜덤 (익명의 ~~)<br>
+date : 작성일<br>
+genre : 장르 (여기는 하나만)<br>
+youtube_url : 유투브 URL<br>
+rating : 0 ~ 5 (step : 0.5)<br>
+comment : 한줄평<br>
+review : 비평글<br>
+highlight : 자신이 꼽는 하이라이트 구간</p>
+</blockquote>
+</li>
+<li>
+<p>Reviews</p>
+<blockquote>
+<p>review_id : review id<br>
+writer : 비평 기고가 닉네임<br>
+date : 작성일<br>
+comment : 한줄평<br>
+review : 비평글<br>
+rating : 0 ~ 5 (step : 0.5)<br>
+youtube_url : 유투브 URL<br>
+release : 발매일</p>
+</blockquote>
+</li>
+<li>
+<p>Regulars</p>
+<blockquote>
+<p>regular_id : regular id<br>
+album_id : album id<br>
+season : 음평회 특집번호</p>
+</blockquote>
+</li>
+<li>
+<p>Seasons</p>
+<blockquote>
+<p>season : 특집 이름 (2020 상반기 특집, 쿠소 특집, Moon’s 100선 … 등등)<br>
+season_icon : 특집 아이콘 url</p>
+</blockquote>
+</li>
+<li>
+<p>Comments</p>
+<blockquote>
+<p>comment_id : comment id<br>
+regular_id : regular id<br>
+writer : 작성자 닉네임<br>
+password : 비밀번호 (수정하고 싶을 때 사용)<br>
+rating : 0 ~ 5 (step: 0.5)<br>
+best1 : best 1 트랙 번호<br>
+best2 : best 2 트랙 번호<br>
+best3 : best 3 트랙 번호</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="check-points">Check Points</h2>
+<ol>
+<li>SSL 설정 =&gt; 이번엔 무조건…!</li>
+<li>Github 설정</li>
+<li>Domain -&gt; Route53 (moontomi.com으로 생각중…)</li>
+<li>페이지별 title 설정하기</li>
+<li>og:graph 설정 다 확인해야해…</li>
+<li>sitemap 제대로 만들어서 네이버 웹마스터 도구 + 구글 웹사이트 등록 잘 마무리하기…!</li>
+<li>가능하다면 이번엔 제대로 google adsense 등록해보기…</li>
+<li>theme 색깔 정하기 + Logo 수정 + 홈페이지 폰트 (롯데마트 vs NanumGothic)</li>
+<li>Header/Footer Style 고려해보자</li>
+</ol>
+</div>
+</body>
+
+</html>

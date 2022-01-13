@@ -14,7 +14,7 @@ const Header = (props, context) => {
     return (
         <div>
             <div className="logo">
-                <a href="http://moontomi.ga">
+                <a href="http://moontomi.duckdns.org">
                     <img src="http://3.35.178.151/images/logo/MoonTomi_Logo.png" alt="logo"/>
                 </a>
             </div>

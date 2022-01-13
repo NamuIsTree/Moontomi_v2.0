@@ -159,3 +159,20 @@
     line-height: 1.5em;
     width: 90%;
 }
+
+.special {
+    display: inline-block;
+    background-image: linear-gradient(90deg, red, orange, #ffd700, green, blue, navy, purple);
+    -webkit-background-clip: text;
+    color: transparent;
+
+    overflow: hidden;
+
+    animation: moveLeft 3s linear infinite;
+    animation-direction: alternate;
+}
+
+@keyframes moveLeft {
+    0% { transform: translateX(20%); }
+    100% { transform: translateX(-50%); }
+}
