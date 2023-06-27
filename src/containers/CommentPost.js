@@ -165,14 +165,15 @@ class CommentPost extends React.Component {
                                 renderInput={(params) => <TextField {...params} style={{textAlign: 'center'}} value={params.id} label="앨범 선택" variant="outlined" />}
                             /> <br/> <br/>
                             
-                            2. 앨범 평점을 선택해 주세요. <br/><br/>
+                            2. 앨범 평점을 선택해 주세요. (별 하나당 0.5점)<br/><br/>
                             <Rating
                                 name="star-rating"
                                 size="large"
-                                value={this.state.star / 2}
-                                precision={0.5}
+                                value={this.state.star}
+                                precision={1}
+                                max={10}
                                 onChange={(event, newValue) => {
-                                    this.setState({star: newValue * 2})
+                                    this.setState({star: newValue})
                                 }}
                             /> <br/> <br/>
 

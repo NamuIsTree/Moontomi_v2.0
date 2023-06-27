@@ -132,6 +132,9 @@ class RegularEval extends React.Component {
 	if (event.target.value === 50 || event.target.value === '50') {
 		ntag = 'special';
 	}
+	if (event.target.value === 100 || event.target.value === '100') {
+	        ntag = 'special-tilt';
+	}
 
         var name, artist, genre, nation, year, list, isOpen, comments, rating;
 
@@ -215,6 +218,9 @@ class RegularEval extends React.Component {
 	if (album.data.length + 1 - id  === 50) {
 		tag = 'special';
 	}
+  if (album.data.length + 1 - id === 100) {
+    tag = 'special-tilt';
+  }
         this.setState({
             album_id: album.data.length + 1 - id,
             album_name: album.data[album.data.length - id].name,
@@ -332,7 +338,7 @@ class RegularEval extends React.Component {
                                 onChange={this.handleValueChange}
                             />
 		            <span className={this.state.tag}>
-			    {this.state.tag === 'special' ? "회★정기★음평회" : "회 정기 음평회"}
+			    {this.state.tag === 'special' ? "회★정기★음평회" : this.state.tag === 'special-tilt' ? "회★경71★%લ્લુ回": "회 정기 음평회"}
 			    </span>
 			    <br/>
                         </div>
@@ -435,14 +441,15 @@ class RegularEval extends React.Component {
                                                         <center>
                                                             평가 수정(#{album_comments[ModalIndex].id}) <br/> <br/>
                                                             [{album_comments[ModalIndex].nickname}]님의 평가를 수정합니다. <br/> <br/>
-                                                            1. 평점 <br/> <br/>
+                                                            1. 평점 (별 하나당 0.5점)<br/> <br/>
                                                             <Rating
                                                                 name="star-rating"
                                                                 size="large"
-                                                                value={ModalStar / 2}
-                                                                precision={0.5}
+                                                                value={ModalStar}
+                                                                precision={1}
+                                                                max={10}
                                                                 onChange={(event, newValue) => {
-                                                                    this.setState({ModalStar: newValue * 2})
+                                                                    this.setState({ModalStar: newValue})
                                                                 }}
                                                             /> <br/> <br/>
 
